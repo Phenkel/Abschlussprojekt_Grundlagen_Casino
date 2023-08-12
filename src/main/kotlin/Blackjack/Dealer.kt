@@ -1,7 +1,8 @@
-package blackjack
+package Blackjack
+import Globals.*
 
 // Klasse, die den Dealer im Blackjack-Spiel repräsentiert
-class Dealer(name: String) : BasicPlayer(name) {
+class Dealer(name: String, hand: Hand = Hand()) : BasicPlayer(name, hand) {
 
     // Überschreibt die Methode handValue() der Basisklasse, um den Wert der Hand des Dealers zu berechnen
     fun handValue(): Int {

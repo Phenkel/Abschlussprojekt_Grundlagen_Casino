@@ -1,4 +1,4 @@
-package blackjack
+package Blackjack
 
 // Klasse, die ein Kartendeck für das Blackjack-Spiel repräsentiert
 class Deck(var deck: MutableList<Card> = mutableListOf()) {

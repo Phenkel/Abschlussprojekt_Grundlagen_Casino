@@ -1,8 +1,5 @@
-package blackjack
-import globals.*
-
-var balance: Double = 0.0
-var bet: Double = 0.0
+package Blackjack
+import Globals.*
 
 var insuranceCheck: Boolean = false
 var splitCheck: Boolean = false
@@ -32,8 +29,14 @@ fun errorMessage(text: String) {
 }
 
 // Funktion zum Anzeigen von Start- und Endmeldungen mit farbigen Symbolen
-fun startAndEndMessage(text: String) {
-    println("$RED$DIAMOND_SYMBOL$HEART_SYMBOL$RESET" + "$BLUE$SPADE_SYMBOL$CLOVER_SYMBOL$RESET" + " " + text + " " + "$BLUE$CLOVER_SYMBOL$SPADE_SYMBOL$RESET" + "$RED$HEART_SYMBOL$DIAMOND_SYMBOL$RESET")
+fun startMessage() {
+    println("${BLUE}┌─────────┐ ${RED}┌─────────┐ ${RESET}######                                                   #    # ${RED}┌─────────┐ ${BLUE}┌─────────┐\n" +
+            "${BLUE}│ ${Rank.ACE.cardRank}       │ ${RED}│ ${Rank.JACK.cardRank}       │ ${RESET}#     # #        ##    ####  #    #      #   ##    ####  #   #  ${RED}│ ${Rank.JACK.cardRank}       │ ${BLUE}│ ${Rank.ACE.cardRank}       │\n" +
+            "${BLUE}│         │ ${RED}│         │ ${RESET}#     # #       #  #  #    # #   #       #  #  #  #    # #  #   ${RED}│         │ ${BLUE}│         │\n" +
+            "${BLUE}│    ${SPADE_SYMBOL}    │ ${RED}│    ${HEART_SYMBOL}    │ ${RESET}######  #      #    # #      ####        # #    # #      ###    ${RED}│    ${DIAMOND_SYMBOL}    │ ${BLUE}│    ${CLOVER_SYMBOL}    │\n" +
+            "${BLUE}│         │ ${RED}│         │ ${RESET}#     # #      ###### #      #  #        # ###### #      #  #   ${RED}│         │ ${BLUE}│         │\n" +
+            "${BLUE}│       ${Rank.ACE.cardRank} │ ${RED}│       ${Rank.JACK.cardRank} │ ${RESET}#     # #      #    # #    # #   #  #    # #    # #    # #   #  ${RED}│       ${Rank.JACK.cardRank} │ ${BLUE}│       ${Rank.ACE.cardRank} │\n" +
+            "${BLUE}└─────────┘ ${RED}└─────────┘ ${RESET}######  ###### #    #  ####  #    #  ####  #    #  ####  #    # ${RED}└─────────┘ ${BLUE}└─────────┘\n${RESET}")
 }
 
 // Funktion, um eine neue Spielrunde zu starten
@@ -67,8 +70,8 @@ fun playerTurn(player: UserPlayer) {
     println("1 - HIT")
     println("2 - STAND")
     println("3 - SURRENDER")
-    println("4 - INSURANCE")
-    println("5 - DOUBLE DOWN")
+    if (balance >= bet) println("4 - INSURANCE")
+    if (balance >= bet) println("5 - DOUBLE DOWN")
     // Prüft, ob eine Split-Option für den Spieler verfügbar ist
     if (player.hand.hand[0].rank == player.hand.hand[1].rank) println("6 - SPLIT")
     var userInputPlayerMenu: Int = 0
@@ -78,10 +81,10 @@ fun playerTurn(player: UserPlayer) {
         try {
             userInputPlayerMenu = readln().toInt()
             // Überprüft die Gültigkeit der Benutzereingabe basierend auf den verfügbaren Optionen
-            if (player.hand.hand[0].rank == player.hand.hand[1].rank && userInputPlayerMenu < 0 && userInputPlayerMenu > 6) {
+            if ((player.hand.hand[0].rank != player.hand.hand[1].rank && userInputPlayerMenu == 6) || (balance < bet && (userInputPlayerMenu == 5 || userInputPlayerMenu == 4))) {
                 errorMessage("Ungültige Eingabe!")
                 userInputPlayerMenu = 0
-            } else if (userInputPlayerMenu < 0 && userInputPlayerMenu > 5) {
+            } else if (userInputPlayerMenu < 0 || userInputPlayerMenu > 6) {
                 errorMessage("Ungültige Eingabe!")
                 userInputPlayerMenu = 0
             }
@@ -97,8 +100,14 @@ fun playerTurn(player: UserPlayer) {
     println()
     // Abhängig von der Benutzereingabe werden die entsprechenden Aktionen für den Spieler ausgeführt
     when (userInputPlayerMenu) {
-        1 -> player.hit()
-        2 -> standCheck = player.stand()
+        1 -> {
+            player.hit()
+            playerHandValue = player.hand.handValue()
+        }
+        2 -> {
+            standCheck = player.stand()
+            playerHandValue = player.hand.handValue()
+        }
         3 -> surrenderCheck = player.surrender()
         4 -> insuranceCheck = player.insurance()
         5 -> doubleDownCheck = player.doubleDown()
@@ -177,7 +186,7 @@ fun playerTurn(player: UserPlayer) {
     }
     // Wenn keine gesplittete Hand vorhanden ist
     else {
-        do {
+        while (!standCheck && playerHandValue <= 21) {
             println("1 - HIT")
             println("2 - STAND")
             print("Treffen sie ihre Auswahl: ")
@@ -205,7 +214,7 @@ fun playerTurn(player: UserPlayer) {
             // Überprüft, ob die Spielerhand beendet ist oder weitere Aktionen erforderlich sind
             if (standCheck) println("Spielerrunde beendet.")
             playerHandValue = player.hand.handValue()
-        } while (!standCheck && playerHandValue <= 21)
+        }
     }
     // Überprüft, ob die Spielerhand oder die gesplittete Hand "burned" ist (über 21)
     if ((!splitCheck && playerHandValue > 21) || (splitCheck && (playerHandValue > 21 && playerSplitHandValue > 21))) {
@@ -233,22 +242,22 @@ fun gameEnd(player: UserPlayer) {
     // Überprüft, ob eine Hand gesplittet wurde
     else if (splitCheck) {
         // Auswertung der Ergebnisse für die beiden gesplitteten Hände
-        if (playerHandValue > dealerHandValue && playerHandValue <= 21) {
+        if ((playerHandValue > dealerHandValue && playerHandValue <= 21) || (playerHandValue <= 21 && dealerHandValue > 21)) {
             successMessage("Erste Hand: Gewinn ${bet * 2}€")
             balance += bet * 2
         } else if (playerHandValue == dealerHandValue && playerHandValue <= 21) {
-            successMessage("Unentschieden! ${bet * 2}€ geht zurück an den Spieler")
+            successMessage("Unentschieden! ${bet}€ geht zurück an den Spieler")
             balance += bet
         } else errorMessage("1. Hand verloren!")
-        if (playerSplitHandValue > dealerHandValue && playerSplitHandValue <= 21) {
+        if ((playerSplitHandValue > dealerHandValue && playerSplitHandValue <= 21) || (playerSplitHandValue <= 21 && dealerHandValue > 21)) {
             successMessage("Zweite Hand: Gewinn ${bet * 2}€")
             balance += bet * 2
         } else if (playerSplitHandValue == dealerHandValue && playerSplitHandValue <= 21) {
-            successMessage("Unentschieden! ${bet * 2}€ geht zurück an den Spieler")
+            successMessage("Unentschieden! ${bet}€ geht zurück an den Spieler")
             balance += bet
         } else errorMessage("2. Hand verloren!")
         // Auswertung der Gesamtergebnisse für beide gesplitteten Hände
-        if ((playerHandValue > dealerHandValue && playerHandValue <= 21) && (playerSplitHandValue > dealerHandValue && playerSplitHandValue <= 21)) {
+        if (((playerHandValue > dealerHandValue && playerHandValue <= 21) || (playerHandValue <= 21 && dealerHandValue > 21)) && ((playerSplitHandValue > dealerHandValue && playerSplitHandValue <= 21) || (playerSplitHandValue <= 21 && dealerHandValue > 21))) {
             successMessage("Gewinn beider Hände: ${bet * 4}€")
         } else if (((playerHandValue > dealerHandValue && playerHandValue <= 21)) || (playerSplitHandValue > dealerHandValue && playerSplitHandValue <= 21)) {
             successMessage("Nur eine Hand gewonnen! Viel Glück beim nächsten Mal.")
@@ -263,7 +272,8 @@ fun gameEnd(player: UserPlayer) {
             successMessage("Gewinn ${bet * 2}€")
             balance += bet * 2
         } else if (playerHandValue == dealerHandValue && playerHandValue <= 21) {
-            successMessage("Unentschieden! ${bet * 2}€ geht zurück an den Spieler")
+            successMessage("Unentschieden! ${bet}€ geht zurück an den Spieler")
+            balance += bet
         } else errorMessage("Runde verloren! Viel Glück beim nächsten Mal.")
     }
 }

@@ -1,7 +1,8 @@
-package blackjack
+package Blackjack
+import Globals.*
 
 // Klasse, die einen Spieler im Blackjack-Spiel repräsentiert, der vom Benutzer gesteuert wird
-class UserPlayer(name: String) : BasicPlayer(name) {
+class UserPlayer(name: String, hand: Hand = Hand()) : BasicPlayer(name, hand) {
     // Ein weiteres Hand-Objekt, das die Hand nach einem Split speichert
     var splitHand: Hand = Hand()
 
@@ -42,9 +43,7 @@ class UserPlayer(name: String) : BasicPlayer(name) {
     // Methode zum Anzeigen der gesplitteten Hand
     fun splitHandShow() {
         println("Die aktuelle Hand von $name:")
-        splitHand.hand.forEach { card ->
-            card.printCard()
-        }
+        println(splitHand)
         println("Der aktuelle Wert der Hand ist: ${splitHand.handValue()}")
     }
 

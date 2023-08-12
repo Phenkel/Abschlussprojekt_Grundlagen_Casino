@@ -1,8 +1,8 @@
-package blackjack
+package Blackjack
 
-import globals.BLUE
-import globals.RED
-import globals.RESET
+import Globals.BLUE
+import Globals.RED
+import Globals.RESET
 
 // Klasse, die eine Hand im Blackjack-Spiel repräsentiert
 open class Hand() {
@@ -51,13 +51,13 @@ open class Hand() {
         var line7 = ""
         for (card in hand) {
             var color = if (card.suit == Suit.DIAMOND || card.suit == Suit.HEART) RED else BLUE
-            line1 += color + "┌─────────┐" + RESET + " "
-            line2 += color + "│${card.rank.cardRank}        │" + RESET + " "
-            line3 += color + "│         │" + RESET +  " "
-            line4 += color + "│    ${card.suit.cardSuit}    │" + RESET + " "
-            line5 += color + "│         │" + RESET + " "
-            line6 += color + "│        ${card.rank.cardRank}│" + RESET + " "
-            line7 += color + "└─────────┘" + RESET + " "
+            line1 += color + "┌─────────┐" + " "
+            line2 += color + "│ ${card.rank.cardRank}       │" + " "
+            line3 += color + "│         │" +  " "
+            line4 += color + "│    ${card.suit.cardSuit}    │" + " "
+            line5 += color + "│         │" + " "
+            line6 += color + "│       ${card.rank.cardRank} │" + " "
+            line7 += color + "└─────────┘" + " "
         }
         line1 += "\n"
         line2 += "\n"
@@ -65,7 +65,7 @@ open class Hand() {
         line4 += "\n"
         line5 += "\n"
         line6 += "\n"
-        line7 += "\n"
+        line7 += RESET
         return line1 + line2 + line3 + line4 + line5 + line6 + line7
     }
 }

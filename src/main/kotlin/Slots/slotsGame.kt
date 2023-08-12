@@ -1,5 +1,5 @@
-package slots
-import globals.*
+package Slots
+import Globals.*
 
 var newAtSlotsCheck: Boolean = false
 var playAgainUserInput: String = ""

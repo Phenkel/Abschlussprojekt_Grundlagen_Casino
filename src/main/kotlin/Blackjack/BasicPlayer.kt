@@ -1,5 +1,4 @@
-package blackjack
-import globals.*
+package Blackjack
 
 // Eine Klasse, die einen einfachen Spieler im Blackjack-Spiel repräsentiert
 open class BasicPlayer(var name: String, var hand: Hand = Hand()) {

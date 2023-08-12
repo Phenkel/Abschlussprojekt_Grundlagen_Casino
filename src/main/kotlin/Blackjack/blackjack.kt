@@ -1,13 +1,13 @@
-package blackjack
-import globals.*
+package Blackjack
+import Globals.*
 
 fun blackjack() {
-    var userPlayer: UserPlayer = UserPlayer(name)
+    val userPlayer: UserPlayer = UserPlayer(name)
     // Die Schleife läuft solange, bis das Guthaben des Spielers auf 0 fällt
     do {
         // Begrüßungsnachricht, nur einmal beim ersten Mal am Tisch
         if (!newAtTableCheck) {
-            startAndEndMessage("Willkommen am Blackjack-Tisch $name!")
+            startMessage()
             newAtTableCheck = true
         }
         // Nachfragen, ob der Spieler eine weitere Runde spielen möchte oder das Spiel beenden möchte
@@ -73,51 +73,48 @@ fun blackjack() {
         }
 
         // Abfrage, ob der Spieler der Bedienung Trinkgeld geben möchte
-        print("\nMöchten Sie der Bedienung Trinkgeld geben? Ja oder Nein: ")
-        var userInputTip: String = ""
-        do {
-            userInputTip = readln()
-            if (userInputTip != "Ja" && userInputTip != "Nein") {
-                userInputTip = ""
-                print("Wählen Sie Ja oder Nein: ")
-            }
-        } while (userInputTip == "")
-
-        // Wenn der Spieler Trinkgeld gibt, wird der Betrag vom Guthaben abgezogen
-        if (userInputTip == "Ja") {
-            var userInputTipAmount: Double = 0.0
-            println("Ihr aktuelles Guthaben: $balance€")
+        if (balance > 0) {
+            print("\nMöchten Sie der Bedienung Trinkgeld geben? Ja oder Nein: ")
+            var userInputTip: String = ""
             do {
-                print("Wie viel möchten Sie als Trinkgeld geben: ")
-                try {
-                    userInputTipAmount = readln().toDouble()
-                    if (userInputTipAmount > balance) {
-                        errorMessage("Guthaben $balance€ nicht ausreichend!")
+                userInputTip = readln()
+                if (userInputTip != "Ja" && userInputTip != "Nein") {
+                    userInputTip = ""
+                    print("Wählen Sie Ja oder Nein: ")
+                }
+            } while (userInputTip == "")
+
+            // Wenn der Spieler Trinkgeld gibt, wird der Betrag vom Guthaben abgezogen
+            if (userInputTip == "Ja") {
+                var userInputTipAmount: Double = 0.0
+                println("Ihr aktuelles Guthaben: $balance€")
+                do {
+                    print("Wie viel möchten Sie als Trinkgeld geben: ")
+                    try {
+                        userInputTipAmount = readln().toDouble()
+                        if (userInputTipAmount > balance) {
+                            errorMessage("Guthaben $balance€ nicht ausreichend!")
+                            userInputTipAmount = 0.0
+                        }
+                    } catch (e: Exception) {
+                        errorMessage("Ungültige Eingabe!")
                         userInputTipAmount = 0.0
                     }
-                } catch (e: Exception) {
-                    errorMessage("Ungültige Eingabe!")
-                    userInputTipAmount = 0.0
-                }
-            } while (userInputTipAmount == 0.0)
-            balance -= userInputTipAmount
-            successMessage("Die Bedienung bedankt sich für das Trinkgeld!")
-            tipCounter++
-        } else {
-            successMessage("Sehr unhöflich, kein Trinkgeld zu geben!")
+                } while (userInputTipAmount == 0.0)
+                balance -= userInputTipAmount
+                successMessage("Die Bedienung bedankt sich für das Trinkgeld!")
+                tipCounter++
+            } else {
+                errorMessage("Sehr unhöflich, kein Trinkgeld zu geben!")
+            }
         }
 
         // Zurücksetzen aller globalen Variablen für eine neue Runde
         resetGlobals(userPlayer)
-
-        println("\n\n\n")
+        Thread.sleep(1000)
+        println("\n\n\n\n\n\n\n\n\n\n\n\n\n")
 
         // Wenn das Guthaben des Spielers auf 0 fällt, wird das Spiel beendet
         if (balance == 0.0) errorMessage("Keine Chips mehr zur Verfügung! Kaufen Sie erst neue Chips.")
     } while (balance > 0)
-
-    // Abschiedsnachricht, beim Verlassen des Tisch
-    startAndEndMessage("Danke für den Besuch am Blackjack- Tisch $name!")
-
-    // Rückgabe des finalen Guthabens des Spielers
 }

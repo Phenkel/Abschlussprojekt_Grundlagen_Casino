@@ -1,5 +1,5 @@
-package slots
-import globals.*
+package Slots
+import Globals.*
 
 
 class Symbol(val symbol: Char) {

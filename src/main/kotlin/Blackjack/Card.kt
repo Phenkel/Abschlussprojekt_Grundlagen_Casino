@@ -1,5 +1,5 @@
-package blackjack
-import globals.*
+package Blackjack
+import Globals.*
 
 // Definition der Kartenfarben (Suit) für das Blackjackspiel
 enum class Suit(val cardSuit: Char) {
@@ -30,22 +30,22 @@ enum class Rank(val cardValue: Int, val cardRank: String) {
 data class Card(val suit: Suit, val rank: Rank) {
     fun printCard() {
         if (suit == Suit.DIAMOND || suit == Suit.HEART) {
-            println("${globals.RED}┌─────────┐\n" +
-                                  "│${rank.cardRank}        │\n" +
+            println("${Globals.RED}┌─────────┐\n" +
+                                  "│ ${rank.cardRank}       │\n" +
                                   "│         │\n" +
                                   "│    ${suit.cardSuit}    │\n" +
                                   "│         │\n" +
-                                  "│        ${rank.cardRank}│\n" +
-                                  "└─────────┘${globals.RESET}")
+                                  "│       ${rank.cardRank} │\n" +
+                                  "└─────────┘${Globals.RESET}")
         }
         else {
-            println("${globals.BLUE}┌─────────┐\n" +
-                                   "│${rank.cardRank}        │\n" +
+            println("${Globals.BLUE}┌─────────┐\n" +
+                                   "│ ${rank.cardRank}       │\n" +
                                    "│         │\n" +
                                    "│    ${suit.cardSuit}    │\n" +
                                    "│         │\n" +
-                                   "│        ${rank.cardRank}│\n" +
-                                   "└─────────┘${globals.RESET}")
+                                   "│       ${rank.cardRank} │\n" +
+                                   "└─────────┘${Globals.RESET}")
         }
     }
 }
