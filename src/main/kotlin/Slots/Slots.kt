@@ -27,6 +27,7 @@ class Slots() {
 
     fun lineCheck() {
         for (line in lines) {
+            line.forEach { it.isLastSpin = true }
             if (line[0] == line[1] && line[1] == line[2]) {
                 line.forEach { it.hit() }
                 bet *= 3

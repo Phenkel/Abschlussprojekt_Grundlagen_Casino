@@ -1,5 +1,6 @@
 import Globals.*
 import Blackjack.*
+import Slots.slotsGame
 
 fun loadingScreen(color1: String, color2: String, color3: String) {
     println("\n\n\n")
@@ -26,5 +27,4 @@ fun loadingScreenAnimation() {
 
 fun main() {
     loadingScreenAnimation()
-    blackjack()
 }

@@ -109,10 +109,11 @@ fun blackjack() {
             }
         }
 
-        // Zurücksetzen aller globalen Variablen für eine neue Runde
-        resetGlobals(userPlayer)
-        Thread.sleep(1000)
-        println("\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        if (balance > 0) {
+            resetGlobals(userPlayer)
+            Thread.sleep(1000)
+            println("\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        }
 
         // Wenn das Guthaben des Spielers auf 0 fällt, wird das Spiel beendet
         if (balance == 0.0) errorMessage("Keine Chips mehr zur Verfügung! Kaufen Sie erst neue Chips.")

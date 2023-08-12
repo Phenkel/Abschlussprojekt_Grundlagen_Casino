@@ -4,15 +4,21 @@ import Globals.*
 var newAtSlotsCheck: Boolean = false
 var playAgainUserInput: String = ""
 
-fun startAndEndMessage(text: String) {
-    println("$RED$SPADE_SYMBOL$GREEN$DIAMOND_SYMBOL$RED$HEART_SYMBOL$GREEN$CLOVER_SYMBOL${RESET} $text $RED$CLOVER_SYMBOL$GREEN$HEART_SYMBOL$RED$DIAMOND_SYMBOL$GREEN$SPADE_SYMBOL$RESET")
+fun banner() {
+    println("${GREEN}  #####                                ${BLUE} #####                                ${RED} #####                             \n" +
+            "${GREEN} #     # #       ####  #####  ####     ${BLUE}#     # #       ####  #####  ####     ${RED}#     # #       ####  #####  ####  \n" +
+            "${GREEN} #       #      #    #   #   #         ${BLUE}#       #      #    #   #   #         ${RED}#       #      #    #   #   #      \n" +
+            "${GREEN}  #####  #      #    #   #    ####     ${BLUE} #####  #      #    #   #    ####     ${RED} #####  #      #    #   #    ####  \n" +
+            "${GREEN}       # #      #    #   #        #    ${BLUE}      # #      #    #   #        #    ${RED}      # #      #    #   #        # \n" +
+            "${GREEN} #     # #      #    #   #   #    #    ${BLUE}#     # #      #    #   #   #    #    ${RED}#     # #      #    #   #   #    # \n" +
+            "${GREEN}  #####  ######  ####    #    ####     ${BLUE} #####  ######  ####    #    ####     ${RED} #####  ######  ####    #    ####  \n${RESET}")
 }
 
-fun slotsGame(): Double {
+fun slotsGame(){
     var slots: Slots = Slots()
     do {
         if (!newAtSlotsCheck) {
-            startAndEndMessage("Willkommen bei den Slots $name!")
+            banner()
             newAtSlotsCheck = true
         } else {
             do {
@@ -25,7 +31,7 @@ fun slotsGame(): Double {
             } while (playAgainUserInput == "")
         }
         if (playAgainUserInput == "Nein") {
-            startAndEndMessage("Sie werden zurück ins Casino geleitet!")
+            successMessage("Sie werden zurück ins Casino geleitet!")
             repeat(15) {
                 Thread.sleep(150)
                 print(".")
@@ -33,6 +39,7 @@ fun slotsGame(): Double {
             println("\n\n\n")
             break
         }
+        println("Ihr aktuelles Guthaben: $balance€")
         do {
             print("Wieviel € möchten sie setzen?: ")
             try {
@@ -46,7 +53,11 @@ fun slotsGame(): Double {
                 bet = 0.0
             }
         } while (bet == 0.0)
+        balance -= bet
+        println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         print("Drücken sie Enter um an den Slots zu drehen!")
+        println()
+        Thread.sleep(1000)
         readln()
         repeat(4) {
             repeat(15) {
@@ -71,13 +82,8 @@ fun slotsGame(): Double {
             balance += bet
             slots.winCheck = false
         } else errorMessage("Verloren! Viel Glück beim nächsten mal.")
+        if (balance == 0.0) errorMessage("Sie müssen erst neue Chips erwerben um weiterspielen zu können!")
+        Thread.sleep(1000)
+        println("\n\n\n\n\n\n\n\n\n\n\n\n\n")
     } while (balance > 0)
-    if (balance == 0.0) errorMessage("Sie müssen erst neue Chips erwerben um weiterspielen zu können!")
-    newAtSlotsCheck = false
-    repeat(15) {
-        Thread.sleep(150)
-        print(".")
-    }
-    println("\n\n\n")
-    return balance
 }
