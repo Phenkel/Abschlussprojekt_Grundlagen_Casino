@@ -24,7 +24,7 @@ class HorseRace {
             print(horse)
             horseTwoTime += horseRun
         }
-        println("\nZeit von Pferd 1: ${horseTwoTime}ms!")
+        println("\nZeit von Pferd 2: ${horseTwoTime}ms!")
         print("Pferd 3: ")
         var horseThreeTime: Long = 0
         repeat(43) {
@@ -33,7 +33,7 @@ class HorseRace {
             print(horse)
             horseThreeTime += horseRun
         }
-        println("\nZeit von Pferd 1: ${horseThreeTime}ms!")
+        println("\nZeit von Pferd 3: ${horseThreeTime}ms!")
         print("Pferd 4: ")
         var horseFourTime: Long = 0
         repeat(43) {
@@ -42,7 +42,7 @@ class HorseRace {
             print(horse)
             horseFourTime += horseRun
         }
-        println("\nZeit von Pferd 1: ${horseFourTime}ms!")
+        println("\nZeit von Pferd 4: ${horseFourTime}ms!")
         if (horseOneTime < horseTwoTime && horseOneTime < horseThreeTime && horseOneTime < horseFourTime) {
             println("Pferd 1 hat gewonnen!")
             return 1
