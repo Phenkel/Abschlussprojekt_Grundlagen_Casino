@@ -18,16 +18,6 @@ var tipCounter: Int = 0
 var dealer: Dealer = Dealer("Dealer")
 var deck: Deck = Deck()
 
-// Funktion für eine Erfolgsmeldung mit grüner Schrift
-fun successMessage(text: String) {
-    println(GREEN + text + RESET)
-}
-
-// Funktion für eine Fehlermeldung mit roter Schrift
-fun errorMessage(text: String) {
-    println(RED + text + RESET)
-}
-
 // Funktion zum Anzeigen von Start- und Endmeldungen mit farbigen Symbolen
 fun startMessage() {
     println("${BLUE}┌─────────┐ ${RED}┌─────────┐ ${RESET}######                                                   #    # ${RED}┌─────────┐ ${BLUE}┌─────────┐\n" +

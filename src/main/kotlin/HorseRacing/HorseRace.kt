@@ -15,7 +15,7 @@ class HorseRace {
             print(horse)
             horseOneTime += horseRun
         }
-        println("\nZeit von Pferd 1: ${horseOneTime}ms!")
+        println("\nZeit von Pferd 1: ${GREEN}${horseOneTime}ms${RESET}!")
         print("Pferd 2: ")
         var horseTwoTime: Long = 0
         repeat(43) {
@@ -24,7 +24,7 @@ class HorseRace {
             print(horse)
             horseTwoTime += horseRun
         }
-        println("\nZeit von Pferd 2: ${horseTwoTime}ms!")
+        println("\nZeit von Pferd 2: ${GREEN}${horseTwoTime}ms${RESET}!")
         print("Pferd 3: ")
         var horseThreeTime: Long = 0
         repeat(43) {
@@ -33,7 +33,7 @@ class HorseRace {
             print(horse)
             horseThreeTime += horseRun
         }
-        println("\nZeit von Pferd 3: ${horseThreeTime}ms!")
+        println("\nZeit von Pferd 3: ${GREEN}${horseThreeTime}ms${RESET}!")
         print("Pferd 4: ")
         var horseFourTime: Long = 0
         repeat(43) {
@@ -42,21 +42,21 @@ class HorseRace {
             print(horse)
             horseFourTime += horseRun
         }
-        println("\nZeit von Pferd 4: ${horseFourTime}ms!")
+        println("\nZeit von Pferd 4: ${GREEN}${horseFourTime}ms${RESET}!")
         if (horseOneTime < horseTwoTime && horseOneTime < horseThreeTime && horseOneTime < horseFourTime) {
-            println("Pferd 1 hat gewonnen!")
+            successMessage("Pferd 1 hat gewonnen!")
             return 1
         }
         else if (horseTwoTime < horseThreeTime && horseTwoTime < horseFourTime) {
-            println("Pferd 2 hat gewonnen!")
+            successMessage("Pferd 2 hat gewonnen!")
             return 2
         }
         else if (horseThreeTime < horseFourTime) {
-            println("Pferd 3 hat gewonnen!")
+            successMessage("Pferd 3 hat gewonnen!")
             return 3
         }
         else {
-            println("Pferd 4 hat gewonnen!")
+            successMessage("Pferd 4 hat gewonnen!")
             return 4
         }
     }

@@ -9,11 +9,11 @@ class Slots() {
     var winCheck: Boolean = false
 
     fun displayLines() {
-        println("===============")
+        println("${BLUE}=====${RED}=====${GREEN}=====${RESET}")
         for (line in lines) {
             println(line.joinToString(" - "))
         }
-        println("===============")
+        println("${GREEN}=====${RED}=====${BLUE}=====${RESET}")
     }
 
     fun resetLines() {

@@ -19,13 +19,13 @@ fun horseRacingBanner() {
             "     ${BROWN}(_\\       (_\\        ${RESET}#     #  ####  #    #  ####  ###### #     # #    #  ####  # #    #  ####  \n")
 }
 
-fun main() {
+fun horseRacing() {
     do {
         if (!newAtHorseRacing) {
             horseRacingBanner()
             newAtHorseRacing = true
             Thread.sleep(1000)
-            println("Willkommen beim Pferderennen $name!")
+            successMessage("Willkommen beim Pferderennen $name!")
         } else {
             print("Bereit für die nächste Runde? Ja oder Nein: ")
             do {
@@ -77,7 +77,7 @@ fun main() {
                 userInputHorse = 0
             }
         } while (userInputHorse == 0)
-        println("Viel Erfolg!")
+        successMessage("Viel Erfolg!")
         Thread.sleep(1000)
         println()
         val winningHorse = horseRace.race()

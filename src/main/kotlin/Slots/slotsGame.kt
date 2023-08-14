@@ -15,11 +15,13 @@ fun banner() {
 }
 
 fun slotsGame(){
+    println("\n\n\n\n\n\n\n\n\n\n\n")
     var slots: Slots = Slots()
     do {
         if (!newAtSlotsCheck) {
             banner()
             newAtSlotsCheck = true
+            successMessage("Willkommen an der Slotmaschine $name!")
         } else {
             do {
                 print("Möchten sie noch eine Runde spielen? Ja oder Nein: ")
@@ -32,10 +34,7 @@ fun slotsGame(){
         }
         if (playAgainUserInput == "Nein") {
             successMessage("Sie werden zurück ins Casino geleitet!")
-            repeat(15) {
-                Thread.sleep(150)
-                print(".")
-            }
+            Thread.sleep(1000)
             println("\n\n\n")
             break
         }
@@ -54,10 +53,9 @@ fun slotsGame(){
             }
         } while (bet == 0.0)
         balance -= bet
+        Thread.sleep(1000)
         println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         print("Drücken sie Enter um an den Slots zu drehen!")
-        println()
-        Thread.sleep(1000)
         readln()
         repeat(4) {
             repeat(15) {
@@ -81,7 +79,11 @@ fun slotsGame(){
             successMessage("Gesamtgewinn $bet€! Herzlichen Glückwunsch.")
             balance += bet
             slots.winCheck = false
-        } else errorMessage("Verloren! Viel Glück beim nächsten mal.")
+            Thread.sleep(500)
+        } else {
+            errorMessage("Verloren! Viel Glück beim nächsten mal.")
+            Thread.sleep(500)
+        }
         if (balance == 0.0) errorMessage("Sie müssen erst neue Chips erwerben um weiterspielen zu können!")
         Thread.sleep(1000)
         println("\n\n\n\n\n\n\n\n\n\n\n\n\n")

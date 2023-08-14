@@ -2,6 +2,7 @@ package Blackjack
 import Globals.*
 
 fun blackjack() {
+    println("\n\n\n\n\n\n\n\n\n\n")
     val userPlayer: UserPlayer = UserPlayer(name)
     // Die Schleife läuft solange, bis das Guthaben des Spielers auf 0 fällt
     do {

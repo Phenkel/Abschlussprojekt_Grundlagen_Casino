@@ -13,6 +13,8 @@ var balance: Double = 10000.0
 var bet: Double = 5000.0
 var name: String = ""
 
+var leaveCasino: Boolean = false
+
 fun successMessage(text: String) {
     println(GREEN + text + RESET)
 }
