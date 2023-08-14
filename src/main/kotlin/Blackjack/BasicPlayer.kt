@@ -4,9 +4,9 @@ package Blackjack
 open class BasicPlayer(var name: String, var hand: Hand = Hand()) {
 
     // Methode zum Anzeigen der aktuellen Hand des Spielers
-    fun handShow() {
+    open fun handShow() {
         println("Die aktuelle Hand von $name:")
         println(hand)
-        println("Der aktuelle Wert der Hand ist: ${hand.handValue()}")
+        println("Der aktuelle Wert der Hand ist: ${hand.handValue(true)}")
     }
 }

@@ -5,12 +5,10 @@ import Globals.*
 class Dealer(name: String, hand: Hand = Hand()) : BasicPlayer(name, hand) {
 
     // Überschreibt die Methode handValue() der Basisklasse, um den Wert der Hand des Dealers zu berechnen
-    fun handValue(): Int {
-        var handvalue: Int = 0
-        for (card in hand.hand) {
-            handvalue += card.rank.cardValue // Addiert den Wert jeder Karte in der Hand des Dealers zum Gesamtwert
-        }
-        return handvalue // Gibt den berechneten Handwert zurück
+    override fun handShow() {
+        println("Die aktuelle Hand von $name:")
+        println(hand)
+        println("Der aktuelle Wert der Hand ist: ${hand.handValue(false)}")
     }
 
     // Methode zum Starten der Dealer-Runde
@@ -31,7 +29,7 @@ class Dealer(name: String, hand: Hand = Hand()) : BasicPlayer(name, hand) {
     fun dealerTurn() {
         handShow() // Zeigt die Hand des Dealers an
         // Der Dealer zieht Karten, solange der Wert der Hand kleiner als 17 ist
-        while (handValue() < 17 ) {
+        while (hand.handValue(false) < 17 ) {
             println("$name zieht eine weitere Karte!")
             // Eine kurze Verzögerung, um das "Ziehen" der Karte zu simulieren
             repeat(30) {
@@ -43,6 +41,6 @@ class Dealer(name: String, hand: Hand = Hand()) : BasicPlayer(name, hand) {
             handShow() // Zeigt die aktualisierte Hand des Dealers an
         }
         println("Dealerrunde beendet")
-        dealerHandValue = handValue() // Setzt den Wert der Hand des Dealers für das Spielende fest
+        dealerHandValue = hand.handValue(false) // Setzt den Wert der Hand des Dealers für das Spielende fest
     }
 }

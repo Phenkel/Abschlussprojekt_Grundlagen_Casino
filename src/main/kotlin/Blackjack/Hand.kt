@@ -5,7 +5,7 @@ import Globals.RED
 import Globals.RESET
 
 // Klasse, die eine Hand im Blackjack-Spiel repräsentiert
-open class Hand() {
+class Hand() {
     // Eine Liste von Karten, die die Hand enthält
     val hand: MutableList<Card> = mutableListOf()
 
@@ -15,29 +15,35 @@ open class Hand() {
     }
 
     // Methode zum Berechnen des Wertes der Hand
-    open fun handValue(): Int {
+    fun handValue(acesToOne: Boolean): Int {
         var handValue: Int = 0  // Variable, um den aktuellen Wert der Hand zu speichern
-        var aces: Int = 0       // Variable, um die Anzahl der Asse in der Hand zu zählen (Ass kann 1 oder 11 wert sein)
+        if (acesToOne) {
+            var aces: Int = 0       // Variable, um die Anzahl der Asse in der Hand zu zählen (Ass kann 1 oder 11 wert sein)
 
-        // Durchlaufe jede Karte in der Hand
-        for (card in hand) {
-            when (card.rank) {
-                Rank.ACE -> {  // Wenn die Karte ein Ass ist
-                    handValue += card.rank.cardValue  // Füge den Wert des Asses zum aktuellen Handwert hinzu (normalerweise 11)
-                    aces++  // Erhöhe die Anzahl der Asse in der Hand
+            // Durchlaufe jede Karte in der Hand
+            for (card in hand) {
+                when (card.rank) {
+                    Rank.ACE -> {  // Wenn die Karte ein Ass ist
+                        handValue += card.rank.cardValue  // Füge den Wert des Asses zum aktuellen Handwert hinzu (normalerweise 11)
+                        aces++  // Erhöhe die Anzahl der Asse in der Hand
+                    }
+                    else -> handValue += card.rank.cardValue  // Für andere Karten, füge ihren Wert zum aktuellen Handwert hinzu
                 }
-                else -> handValue += card.rank.cardValue  // Für andere Karten, füge ihren Wert zum aktuellen Handwert hinzu
+            }
+
+            // Wenn der Handwert größer als 21 ist und Asse in der Hand vorhanden sind
+            // Dann zähle ein Ass als 1 statt 11, um den Handwert zu reduzieren (um ein Bust zu verhindern)
+            while (handValue > 21 && aces > 0) {
+                aces--  // Reduziere die Anzahl der verbleibenden Asse
+                handValue -= 10  // Ziehe 10 vom Handwert ab (da ein Ass von 11 auf 1 reduziert wird)
+            }
+
+            // Gib den berechneten Handwert zurück
+        } else {
+            for (card in hand) {
+                handValue += card.rank.cardValue
             }
         }
-
-        // Wenn der Handwert größer als 21 ist und Asse in der Hand vorhanden sind
-        // Dann zähle ein Ass als 1 statt 11, um den Handwert zu reduzieren (um ein Bust zu verhindern)
-        while (handValue > 21 && aces > 0) {
-            aces--  // Reduziere die Anzahl der verbleibenden Asse
-            handValue -= 10  // Ziehe 10 vom Handwert ab (da ein Ass von 11 auf 1 reduziert wird)
-        }
-
-        // Gib den berechneten Handwert zurück
         return handValue
     }
 

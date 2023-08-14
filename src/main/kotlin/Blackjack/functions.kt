@@ -90,14 +90,8 @@ fun playerTurn(player: UserPlayer) {
     println()
     // Abhängig von der Benutzereingabe werden die entsprechenden Aktionen für den Spieler ausgeführt
     when (userInputPlayerMenu) {
-        1 -> {
-            player.hit()
-            playerHandValue = player.hand.handValue()
-        }
-        2 -> {
-            standCheck = player.stand()
-            playerHandValue = player.hand.handValue()
-        }
+        1 -> player.hit()
+        2 -> standCheck = player.stand()
         3 -> surrenderCheck = player.surrender()
         4 -> insuranceCheck = player.insurance()
         5 -> doubleDownCheck = player.doubleDown()
@@ -136,7 +130,6 @@ fun playerTurn(player: UserPlayer) {
             }
             // Überprüft, ob die Spielerhand beendet ist oder weitere Aktionen erforderlich sind
             if (standCheck) println("Jetzt kommt die Splithand.")
-            playerHandValue = player.hand.handValue()
             // Überprüft, ob die Spielerhand "burned" ist (über 21)
             if (playerHandValue > 21) errorMessage("BURNED!")
         } while (!standCheck && playerHandValue <= 21)
@@ -169,7 +162,6 @@ fun playerTurn(player: UserPlayer) {
             }
             // Überprüft, ob die gesplittete Hand beendet ist oder weitere Aktionen erforderlich sind
             if (splitStandCheck) println("Spielerrunde beendet.")
-            playerSplitHandValue = player.splitHand.handValue()
             // Überprüft, ob die gesplittete Hand "burned" ist (über 21)
             if (playerSplitHandValue > 21 && playerHandValue <= 21) errorMessage("BURNED!")
         } while (!splitStandCheck && playerSplitHandValue <= 21)
@@ -203,7 +195,6 @@ fun playerTurn(player: UserPlayer) {
             }
             // Überprüft, ob die Spielerhand beendet ist oder weitere Aktionen erforderlich sind
             if (standCheck) println("Spielerrunde beendet.")
-            playerHandValue = player.hand.handValue()
         }
     }
     // Überprüft, ob die Spielerhand oder die gesplittete Hand "burned" ist (über 21)

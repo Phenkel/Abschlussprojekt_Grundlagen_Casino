@@ -64,7 +64,6 @@ fun blackjack() {
         // Wenn der Spieler nicht aufgegeben hat und nicht "burned" ist, führt der Dealer seine Runde aus
         if (!surrenderCheck && !playerBurnedCheck) {
             dealer.dealerTurn()
-            dealerHandValue = dealer.handValue()
             // Bewertung der Ergebnisse der Runde
             gameEnd(userPlayer)
         } else if (surrenderCheck) {

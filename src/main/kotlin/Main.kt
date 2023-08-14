@@ -46,6 +46,7 @@ fun buyNewChips() {
         try {
             userInputMoney = readln().toDouble()
         } catch (e: Exception) {
+            errorMessage("Ungültige Eingabe!")
             userInputMoney = 0.0
         }
         userInputMoney = round(userInputMoney * 100) / 100
@@ -53,6 +54,7 @@ fun buyNewChips() {
     balance += userInputMoney
     successMessage("Ihr Kauf von Chips im Wert von $userInputMoney€ war erfolgreich! Ihr neuer Kontostand: $balance€\n" +
             "Viel Erfolg beim Spielen!")
+    Thread.sleep(1000)
 }
 
 fun main() {
@@ -109,7 +111,7 @@ fun main() {
             } while (userInputMenu == 0)
         }
         when (userInputMenu) {
-            1 -> println()
+            1 -> buyNewChips()
             2 -> blackjack()
             3 -> horseRacing()
             4 -> slotsGame()
