@@ -21,6 +21,7 @@ fun blackjack() {
                 val userInputEndGame = readln()
                 if (userInputEndGame != "Ja" && userInputEndGame != "Nein") {
                     errorMessage("Ungültige Eingabe!")
+                    wrongUserInput()
                     print("Bitte wählen Sie Ja oder Nein: ")
                 } else if (userInputEndGame == "Nein") {
                     successMessage("Sie werden zurück in das Casino geleitet!")
@@ -33,7 +34,10 @@ fun blackjack() {
         }
 
         // Das Spiel beenden, wenn der Spieler das möchte
-        if (endGameCheck) break
+        if (endGameCheck) {
+            endGameCheck = false
+            break
+        }
 
         println("Ihr aktuelles Guthaben: $balance€")
 
@@ -45,9 +49,11 @@ fun blackjack() {
                 if (bet > balance) {
                     bet = 0.0
                     errorMessage("Guthaben $balance nicht ausreichend!")
+                    wrongUserInput()
                 }
             } catch (e: Exception) {
                 errorMessage("Ungültige Eingabe! Format 0.00")
+                wrongUserInput()
                 bet = 0.0
             }
         } while (bet == 0.0)
@@ -87,6 +93,8 @@ fun blackjack() {
                 userInputTip = readln()
                 if (userInputTip != "Ja" && userInputTip != "Nein") {
                     userInputTip = ""
+                    errorMessage("Ungültige Eingabe!")
+                    wrongUserInput()
                     print("Wählen Sie Ja oder Nein: ")
                 }
             } while (userInputTip == "")
@@ -100,10 +108,12 @@ fun blackjack() {
                         userInputTipAmount = readln().toDouble()
                         if (userInputTipAmount > balance) {
                             errorMessage("Guthaben $balance€ nicht ausreichend!")
+                            wrongUserInput()
                             userInputTipAmount = 0.0
                         }
                     } catch (e: Exception) {
                         errorMessage("Ungültige Eingabe!")
+                        wrongUserInput()
                         userInputTipAmount = 0.0
                     }
                 } while (userInputTipAmount == 0.0)
@@ -123,6 +133,9 @@ fun blackjack() {
         }
 
         // Wenn das Guthaben aufgebraucht ist, das Spiel beenden
-        if (balance == 0.0) errorMessage("Keine Chips mehr zur Verfügung! Kaufen Sie erst neue Chips.")
+        if (balance == 0.0) {
+            errorMessage("Keine Chips mehr zur Verfügung! Kaufen Sie erst neue Chips.")
+            Thread.sleep(1000)
+        }
     } while (balance > 0)
 }

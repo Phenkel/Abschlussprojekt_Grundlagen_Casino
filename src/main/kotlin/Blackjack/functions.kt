@@ -75,13 +75,16 @@ fun playerTurn(player: UserPlayer) {
             // Überprüfung der Auswahl basierend auf den Spielregeln und dem Spielerstatus
             if ((player.hand.hand[0].rank != player.hand.hand[1].rank && userInputPlayerMenu == 6) || (balance < bet && (userInputPlayerMenu == 5 || userInputPlayerMenu == 4))) {
                 errorMessage("Ungültige Eingabe!")
+                wrongUserInput()
                 userInputPlayerMenu = 0
             } else if (userInputPlayerMenu < 0 || userInputPlayerMenu > 6) {
                 errorMessage("Ungültige Eingabe!")
+                wrongUserInput()
                 userInputPlayerMenu = 0
             }
         } catch (e: Exception) {
             errorMessage("Ungültige Eingabe!")
+            wrongUserInput()
             userInputPlayerMenu = 0
         }
     } while (userInputPlayerMenu == 0)
@@ -113,10 +116,12 @@ fun playerTurn(player: UserPlayer) {
                 userInputPlayerMenu = readln().toInt()
                 if (userInputPlayerMenu != 1 && userInputPlayerMenu != 2) {
                     errorMessage("Ungültige Eingabe!")
+                    wrongUserInput()
                     userInputPlayerMenu = 0
                 }
             } catch (e: Exception) {
                 errorMessage("Ungültige Eingabe!")
+                wrongUserInput()
                 userInputPlayerMenu = 0
             }
             repeat(30) {
@@ -142,10 +147,12 @@ fun playerTurn(player: UserPlayer) {
                 userInputPlayerMenu = readln().toInt()
                 if (userInputPlayerMenu != 1 && userInputPlayerMenu != 2) {
                     errorMessage("Ungültige Eingabe!")
+                    wrongUserInput()
                     userInputPlayerMenu = 0
                 }
             } catch (e: Exception) {
                 errorMessage("Ungültige Eingabe!")
+                wrongUserInput()
                 userInputPlayerMenu = 0
             }
             repeat(30) {
@@ -171,10 +178,12 @@ fun playerTurn(player: UserPlayer) {
                 userInputPlayerMenu = readln().toInt()
                 if (userInputPlayerMenu != 1 && userInputPlayerMenu != 2) {
                     errorMessage("Ungültige Eingabe!")
+                    wrongUserInput()
                     userInputPlayerMenu = 0
                 }
             } catch (e: Exception) {
                 errorMessage("Ungültige Eingabe!")
+                wrongUserInput()
                 userInputPlayerMenu = 0
             }
             repeat(30) {

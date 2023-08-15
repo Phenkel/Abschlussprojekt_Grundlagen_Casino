@@ -33,6 +33,7 @@ fun slotsGame() {
                 playAgainUserInput = readln()
                 if (playAgainUserInput != "Ja" && playAgainUserInput != "Nein") {
                     errorMessage("Ungültige Eingabe!")
+                    wrongUserInput()
                     playAgainUserInput = ""
                 }
             } while (playAgainUserInput == "")
@@ -54,10 +55,12 @@ fun slotsGame() {
                 bet = readln().toDouble()
                 if (bet > balance) {
                     errorMessage("Sie haben nur noch $balance€ zur Verfügung!")
+                    wrongUserInput()
                     bet = 0.0
                 }
             } catch (e: Exception) {
                 errorMessage("Ungültige Eingabe!")
+                wrongUserInput()
                 bet = 0.0
             }
         } while (bet == 0.0)

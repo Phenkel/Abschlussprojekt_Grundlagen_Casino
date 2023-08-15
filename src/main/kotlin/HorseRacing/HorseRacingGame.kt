@@ -41,6 +41,7 @@ fun horseRacing() {
                 val userInputEndGame = readln()
                 if (userInputEndGame != "Ja" && userInputEndGame != "Nein") {
                     errorMessage("Ungültige Eingabe!")
+                    wrongUserInput()
                     print("Bitte wählen Sie Ja oder Nein: ")
                 } else if (userInputEndGame == "Nein") {
                     successMessage("Sie werden zurück in das Casino geleitet!")
@@ -55,7 +56,10 @@ fun horseRacing() {
                 }
             } while (userInputEndGame != "Ja" && userInputEndGame != "Nein")
         }
-        if (leaveTrack) break
+        if (leaveTrack) {
+            leaveTrack = false
+            break
+        }
 
         // Wettinformationen vom Spieler erhalten.
         println("Ihr aktuelles Guthaben: $balance€")
@@ -66,15 +70,17 @@ fun horseRacing() {
                 if (bet > balance) {
                     bet = 0.0
                     errorMessage("Guthaben $balance nicht ausreichend!")
+                    wrongUserInput()
                 }
             } catch (e: Exception) {
                 errorMessage("Ungültige Eingabe! Format 0.00")
+                wrongUserInput()
                 bet = 0.0
             }
         } while (bet == 0.0)
 
         balance -= bet // Wetteinsatz vom Guthaben abziehen
-        println("Auf welches Pferd möchten Sie wetten? (1, 2, 3 oder 4): ")
+        println("Auf welches Pferd möchten Sie wetten?")
         var userInputHorse: Int = 0
         do {
             print("1, 2, 3 oder 4: ")
@@ -82,10 +88,12 @@ fun horseRacing() {
                 userInputHorse = readln().toInt()
                 if (userInputHorse < 1 || userInputHorse > 4) {
                     errorMessage("Ungültige Eingabe!")
+                    wrongUserInput()
                     userInputHorse = 0
                 }
             } catch (e: Exception) {
                 errorMessage("Ungültige Eingabe!")
+                wrongUserInput()
                 userInputHorse = 0
             }
         } while (userInputHorse == 0)

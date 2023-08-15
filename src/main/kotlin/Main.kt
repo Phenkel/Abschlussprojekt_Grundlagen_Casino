@@ -50,6 +50,7 @@ fun buyNewChips() {
             readln().toDouble()
         } catch (e: Exception) {
             errorMessage("Ungültige Eingabe!")
+            wrongUserInput()
             0.0
         }
         userInputMoney = round(userInputMoney * 100) / 100
@@ -95,10 +96,13 @@ fun main() {
                     userInputMenu = readln().toInt()
                     if (userInputMenu <1 || userInputMenu > 5) {
                         errorMessage("Ungültige Eingabe!")
+                        wrongUserInput()
                         userInputMenu = 0
                     }
                 } catch (e: Exception) {
                     errorMessage("Ungültige Eingabe!")
+                    wrongUserInput()
+                    userInputMenu = 0
                 }
             } while (userInputMenu == 0)
         } else {
@@ -113,10 +117,13 @@ fun main() {
                     userInputMenu = readln().toInt()
                     if (userInputMenu != 1 && userInputMenu != 5) {
                         errorMessage("Ungültige Eingabe!")
+                        wrongUserInput()
                         userInputMenu = 0
                     }
                 } catch (e: Exception) {
                     errorMessage("Ungültige Eingabe!")
+                    wrongUserInput()
+                    userInputMenu = 0
                 }
             } while (userInputMenu == 0)
         }
