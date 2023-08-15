@@ -27,12 +27,12 @@ var idiotCounter: Int = 0
 fun wrongUserInput() {
     idiotCounter++
     when (idiotCounter) {
-        in 1..5 -> println("Falsche Eingabe, hm? Bist du sicher, dass du hierher gehörst?")
-        in 6..10 -> println("Ohne Scheiß, du versuchst mich zu testen, oder?")
-        in 11..15 -> println("Das wird langsam peinlich, oder? Machst du das extra?")
-        in 16..20 -> println("Ok, jetzt reicht's. Du tust wirklich alles, um mich zu nerven, oder?")
+        in 1..5 -> println("${RED}Falsche Eingabe, hm? Bist du sicher, dass du hierher gehörst?${RESET}")
+        in 6..10 -> println("${RED}Ohne Scheiß, du versuchst mich zu testen, oder?${RESET}")
+        in 11..15 -> println("${RED}Das wird langsam peinlich, oder? Machst du das extra?${RESET}")
+        in 16..20 -> println("${RED}Ok, jetzt reicht's. Du tust wirklich alles, um mich zu nerven, oder?${RESET}")
         else -> {
-            println("Du hast den Idiotenmodus überschritten. Ich werde jetzt einfach auflegen.")
+            println("${RED}Du hast den Idiotenmodus überschritten. Ich werde jetzt einfach auflegen.")
             exitProcess(0)
         }
     }
