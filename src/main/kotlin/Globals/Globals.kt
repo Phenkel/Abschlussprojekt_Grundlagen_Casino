@@ -1,5 +1,7 @@
 package Globals
 
+import java.util.Random
+import kotlin.math.round
 import kotlin.system.exitProcess
 
 // Hier werden verschiedene Unicode-Symbole für die Kartensymbole definiert.
@@ -26,14 +28,65 @@ var idiotCounter: Int = 0
 // Funktion um den User auf eine falsche Eingabe "hinzuweisen" und das Programm bei ständiger Falscheingabe zu beenden
 fun wrongUserInput() {
     idiotCounter++
+    print(RED)
     when (idiotCounter) {
-        in 1..5 -> println("${RED}Falsche Eingabe, hm? Bist du sicher, dass du hierher gehörst?${RESET}")
-        in 6..10 -> println("${RED}Ohne Scheiß, du versuchst mich zu testen, oder?${RESET}")
-        in 11..15 -> println("${RED}Das wird langsam peinlich, oder? Machst du das extra?${RESET}")
-        in 16..20 -> println("${RED}Ok, jetzt reicht's. Du tust wirklich alles, um mich zu nerven, oder?${RESET}")
+        in 1..5 -> println("Falsche Eingabe, hm? Bist du sicher, dass du hierher gehörst?")
+        in 6..10 -> println("Ohne Scheiß, du versuchst mich zu testen, oder?")
+        in 11..15 -> println("Das wird langsam peinlich, oder? Machst du das extra?")
+        in 16..20 -> println("Ok, jetzt reicht's. Du tust wirklich alles, um mich zu nerven, oder?")
         else -> {
-            println("${RED}Du hast den Idiotenmodus überschritten. Ich werde jetzt einfach auflegen.")
+            println("Du hast den Idiotenmodus überschritten. Ich werde jetzt einfach auflegen.")
             exitProcess(0)
+        }
+    }
+    print(RESET)
+}
+
+// Eine Funktion um beklaut zu werden (zufällig)
+fun pickPocket(){
+    val pickPocketChance: Int = (1..(100 - alcoholCounter)).random()
+    if (pickPocketChance <= 2) {
+        val stolenMoney: Double = round((balance * 0.1) * 100) / 100
+        balance -= stolenMoney
+        errorMessage("Ein Taschendieb hat die gerade $stolenMoney€ geklaut! Doof gelaufen aber du hättest es ja eh nur verzockt.")
+    }
+}
+
+// Variable um den Alkoholkonsum zu speichern
+var alcoholCounter: Int = 0
+
+// Funktion um zu trinken
+fun drink() {
+    val alcoholicDrinks: List<String> = listOf("Bier", "Wein", "Schnaps")
+    val nonAlcohlicDrinks: List<String> = listOf("Cola", "Wasser", "Fanta")
+    var userInputDrink: String = ""
+    do {
+        print("Möchten sie etwas trinken? Ja oder Nein: ")
+        userInputDrink = readln()
+        if (userInputDrink != "Ja" && userInputDrink != "Nein") {
+            errorMessage("Ungültige Eingabe")
+            wrongUserInput()
+            userInputDrink = ""
+        }
+    } while (userInputDrink == "")
+    if (userInputDrink == "Ja") {
+        println("Hier ist die Auswahl unserer Getränke: ")
+        println("Alkohol: ${alcoholicDrinks.joinToString(", ")}")
+        println("Softgetränke: ${nonAlcohlicDrinks.joinToString(", ")}")
+        print("Was möchten sie trinken: ")
+        userInputDrink = readln()
+        if (alcoholicDrinks.contains(userInputDrink)) {
+            println("Ein $userInputDrink für $name!")
+            alcoholCounter++
+        } else if (nonAlcohlicDrinks.contains(userInputDrink)) {
+            println("Ein $userInputDrink für $name!")
+            alcoholCounter--
+        } else if (userInputDrink == "Radler") {
+            errorMessage("So etwas wird hier nicht geduldet!")
+            exitProcess(0)
+        } else {
+            errorMessage("WOW! Zu blöd um ein Getränk zu bestellen!")
+            wrongUserInput()
         }
     }
 }

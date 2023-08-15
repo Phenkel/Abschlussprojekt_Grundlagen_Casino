@@ -120,6 +120,10 @@ fun horseRacing() {
             errorMessage("Keine Chips mehr verfügbar! Kaufen Sie erst neue Chips.")
             Thread.sleep(1000)
             println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        } else {
+            drink()
+            pickPocket()
+            println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         }
 
         // Eine Pause einlegen, wenn das Guthaben noch vorhanden ist.

@@ -107,6 +107,9 @@ fun slotsGame() {
         // Überprüfen, ob das Guthaben aufgebraucht ist.
         if (balance == 0.0) {
             errorMessage("Sie müssen erst neue Chips erwerben, um weiterspielen zu können!")
+        } else {
+            drink()
+            pickPocket()
         }
 
         Thread.sleep(1000)

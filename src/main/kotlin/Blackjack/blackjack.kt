@@ -136,6 +136,9 @@ fun blackjack() {
         if (balance == 0.0) {
             errorMessage("Keine Chips mehr zur Verfügung! Kaufen Sie erst neue Chips.")
             Thread.sleep(1000)
+        } else {
+            drink()
+            pickPocket()
         }
     } while (balance > 0)
 }
