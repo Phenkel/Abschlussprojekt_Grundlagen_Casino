@@ -1,17 +1,20 @@
 package Blackjack
 import Globals.*
 
+// Funktion für den Hauptspielablauf
 fun blackjack() {
-    println("\n\n\n\n\n\n\n\n\n\n")
+    println("\n\n\n\n\n\n\n\n\n\n")  // Leere Zeilen für klare Ausgabe
+
+    // Erstellen eines Benutzerspielers
     val userPlayer: UserPlayer = UserPlayer(name)
-    // Die Schleife läuft solange, bis das Guthaben des Spielers auf 0 fällt
+
     do {
-        // Begrüßungsnachricht, nur einmal beim ersten Mal am Tisch
+        // Startnachricht anzeigen, wenn der Spieler neu am Tisch ist
         if (!newAtTableCheck) {
             startMessage()
             newAtTableCheck = true
         }
-        // Nachfragen, ob der Spieler eine weitere Runde spielen möchte oder das Spiel beenden möchte
+        // Oder nachfragen, ob der Spieler für die nächste Runde bereit ist
         else {
             print("Bereit für die nächste Runde? Ja oder Nein: ")
             do {
@@ -28,11 +31,13 @@ fun blackjack() {
                 }
             } while (userInputEndGame != "Ja" && userInputEndGame != "Nein")
         }
-        // Wenn der Spieler das Spiel beenden möchte, wird die Schleife beendet
+
+        // Das Spiel beenden, wenn der Spieler das möchte
         if (endGameCheck) break
 
-        // Guthaben des Spielers anzeigen und Wetten platzieren
         println("Ihr aktuelles Guthaben: $balance€")
+
+        // Wetteinsatz festlegen
         do {
             try {
                 print("Geben Sie Ihren Wetteinsatz an: ")
@@ -46,7 +51,6 @@ fun blackjack() {
                 bet = 0.0
             }
         } while (bet == 0.0)
-        // Reduziere das Guthaben des Spielers um den Wetteinsatz
         balance -= bet
         repeat(30) {
             print(".")
@@ -54,17 +58,20 @@ fun blackjack() {
         }
         println()
 
-        // Wenn der Kartendeck fast aufgebraucht ist, wird ein neues Kartendeck erstellt und gemischt
+        // Wenn der Kartenstapel fast leer ist, Kartenstapel wechseln
         if (deck.deck.size <= 156) deck.deckChange()
 
-        // Beginne die Spielrunde
+        // Spielstart: Karten austeilen
         gameStart(userPlayer)
+
+        // Spielerrunde: Entscheidungen treffen
         playerTurn(userPlayer)
 
-        // Wenn der Spieler nicht aufgegeben hat und nicht "burned" ist, führt der Dealer seine Runde aus
+        // Wenn der Spieler nicht aufgegeben hat und nicht überkauft ist, folgt die Dealerrunde
         if (!surrenderCheck && !playerBurnedCheck) {
             dealer.dealerTurn()
-            // Bewertung der Ergebnisse der Runde
+
+            // Spielende: Ergebnis auswerten
             gameEnd(userPlayer)
         } else if (surrenderCheck) {
             errorMessage("Aufgegeben! Viel Glück beim nächsten Mal.")
@@ -72,7 +79,7 @@ fun blackjack() {
             errorMessage("Verloren! Viel Glück beim nächsten Mal.")
         }
 
-        // Abfrage, ob der Spieler der Bedienung Trinkgeld geben möchte
+        // Trinkgeld geben, wenn das Guthaben positiv ist
         if (balance > 0) {
             print("\nMöchten Sie der Bedienung Trinkgeld geben? Ja oder Nein: ")
             var userInputTip: String = ""
@@ -84,7 +91,6 @@ fun blackjack() {
                 }
             } while (userInputTip == "")
 
-            // Wenn der Spieler Trinkgeld gibt, wird der Betrag vom Guthaben abgezogen
             if (userInputTip == "Ja") {
                 var userInputTipAmount: Double = 0.0
                 println("Ihr aktuelles Guthaben: $balance€")
@@ -109,13 +115,14 @@ fun blackjack() {
             }
         }
 
+        // Wenn das Guthaben noch positiv ist, wird die Spielsituation zurückgesetzt
         if (balance > 0) {
             resetGlobals(userPlayer)
             Thread.sleep(1000)
             println("\n\n\n\n\n\n\n\n\n\n\n\n\n")
         }
 
-        // Wenn das Guthaben des Spielers auf 0 fällt, wird das Spiel beendet
+        // Wenn das Guthaben aufgebraucht ist, das Spiel beenden
         if (balance == 0.0) errorMessage("Keine Chips mehr zur Verfügung! Kaufen Sie erst neue Chips.")
     } while (balance > 0)
 }

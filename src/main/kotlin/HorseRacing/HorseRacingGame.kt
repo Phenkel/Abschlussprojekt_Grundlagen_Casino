@@ -1,11 +1,17 @@
 package HorseRacing
 import Globals.*
 
+// Eine zusätzliche Farbkonstante für die Konsolenausgabe.
 val BROWN = "\u001B[33m"
-val horseRace: HorseRace = HorseRace()
-var newAtHorseRacing: Boolean = false
-var leaveTrack: Boolean = false
 
+// Instanz der HorseRace-Klasse erstellen.
+val horseRace: HorseRace = HorseRace()
+
+// Globale Variablen für das Pferderennen-Modul.
+var newAtHorseRacing: Boolean = false // Wird verwendet, um zu überprüfen, ob der Spieler neu im Pferderennen ist.
+var leaveTrack: Boolean = false // Wird verwendet, um zu überprüfen, ob der Spieler die Rennbahn verlassen möchte.
+
+// Funktion, um den Pferderennen-Banner auszugeben.
 fun horseRacingBanner() {
     println("\n\n\n\n\n\n\n\n\n\n" +
             "                   ${BROWN};;\n" +
@@ -19,14 +25,17 @@ fun horseRacingBanner() {
             "     ${BROWN}(_\\       (_\\        ${RESET}#     #  ####  #    #  ####  ###### #     # #    #  ####  # #    #  ####  \n")
 }
 
+// Funktion, die den gesamten Ablauf des Pferderennens steuert.
 fun horseRacing() {
     do {
+        // Überprüfen, ob der Spieler neu im Pferderennen ist.
         if (!newAtHorseRacing) {
             horseRacingBanner()
             newAtHorseRacing = true
             Thread.sleep(1000)
             successMessage("Willkommen beim Pferderennen $name!")
         } else {
+            // Spieler fragen, ob er für die nächste Runde bereit ist.
             print("Bereit für die nächste Runde? Ja oder Nein: ")
             do {
                 val userInputEndGame = readln()
@@ -47,6 +56,8 @@ fun horseRacing() {
             } while (userInputEndGame != "Ja" && userInputEndGame != "Nein")
         }
         if (leaveTrack) break
+
+        // Wettinformationen vom Spieler erhalten.
         println("Ihr aktuelles Guthaben: $balance€")
         do {
             try {
@@ -61,8 +72,9 @@ fun horseRacing() {
                 bet = 0.0
             }
         } while (bet == 0.0)
-        balance -= bet
-        println("Auf welches Pferd möchten sie wetten?")
+
+        balance -= bet // Wetteinsatz vom Guthaben abziehen
+        println("Auf welches Pferd möchten Sie wetten? (1, 2, 3 oder 4): ")
         var userInputHorse: Int = 0
         do {
             print("1, 2, 3 oder 4: ")
@@ -77,21 +89,32 @@ fun horseRacing() {
                 userInputHorse = 0
             }
         } while (userInputHorse == 0)
+
         successMessage("Viel Erfolg!")
         Thread.sleep(1000)
         println()
+
+        // Pferderennen durchführen und Gewinner ermitteln.
         val winningHorse = horseRace.race()
         Thread.sleep(1000)
         println()
+
+        // Ergebnis anzeigen und Guthaben aktualisieren.
         if (userInputHorse == winningHorse) {
             successMessage("Herzlichen Glückwunsch! Du hast ${bet * 4}€ gewonnen!")
             balance += bet * 4
-        } else errorMessage("Verloren! Viel Glück beim nächsten mal.")
+        } else {
+            errorMessage("Verloren! Viel Glück beim nächsten Mal.")
+        }
+
+        // Prüfen, ob das Guthaben aufgebraucht ist.
         if (balance == 0.0) {
-            errorMessage("Keine Chips mehr zur Verfügung! Kaufen Sie erst neue Chips.")
+            errorMessage("Keine Chips mehr verfügbar! Kaufen Sie erst neue Chips.")
             Thread.sleep(1000)
             println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         }
+
+        // Eine Pause einlegen, wenn das Guthaben noch vorhanden ist.
         if (balance > 0) Thread.sleep(1000)
     } while (balance > 0.0)
 }

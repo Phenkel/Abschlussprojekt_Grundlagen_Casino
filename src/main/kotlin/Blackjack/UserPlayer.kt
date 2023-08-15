@@ -1,101 +1,99 @@
 package Blackjack
-import Globals.*
+
+import Globals.* // Importieren der globalen Konstanten und Funktionen aus der Globals-Datei
 import kotlin.math.round
 
-// Klasse, die einen Spieler im Blackjack-Spiel repräsentiert, der vom Benutzer gesteuert wird
+// Klasse, die den Benutzerspieler im Blackjack-Spiel repräsentiert und von BasicPlayer erbt.
 class UserPlayer(name: String, hand: Hand = Hand()) : BasicPlayer(name, hand) {
-    // Ein weiteres Hand-Objekt, das die Hand nach einem Split speichert
-    var splitHand: Hand = Hand()
 
-    // Methode zum Starten des Spiels für den Benutzer
+    var splitHand: Hand = Hand() // Die Hand für den Fall, dass der Spieler seine Hand splittet
+
+    // Methode, um das Spiel für den Benutzerspieler zu starten.
     fun start() {
         println("$name erhält zwei Karten!")
-        hand.cardAdd() // Zieht eine Karte zur Hand des Spielers
-        hand.cardAdd() // Zieht eine weitere Karte zur Hand des Spielers
-        handShow() // Zeigt die aktuelle Hand des Spielers an
+        hand.cardAdd()
+        hand.cardAdd()
+        handShow()
     }
 
-    // Methode, um eine Karte zu ziehen (Hit)
+    // Methode, um eine Karte zu ziehen (Hit).
     fun hit() {
         println("$name - HIT\n" +
                 "Eine neue Karte wird verteilt!")
-        hand.cardAdd() // Zieht eine Karte zur Hand des Spielers
-        handShow() // Zeigt die aktualisierte Hand des Spielers an
-        // Setzt den Wert der Spielerhand auf den aktuellen Wert
-        playerHandValue = hand.handValue(true)
+        hand.cardAdd()
+        handShow()
+        playerHandValue = hand.handValue(true) // Aktualisieren des Wertes der Hand für den Benutzerspieler
     }
 
-    // Methode, um keine weitere Karte zu ziehen (Stand)
+    // Methode, um keine weiteren Karten zu ziehen (Stand).
     fun stand(): Boolean {
         println("$name - STAND")
         println("Aktueller Wert: ${hand.handValue(true)}")
-        playerHandValue = hand.handValue(true)
-        return true // Gibt 'true' zurück, um anzuzeigen, dass der Spieler steht
+        playerHandValue = hand.handValue(true) // Aktualisieren des Wertes der Hand für den Benutzerspieler
+        return true
     }
 
-    // Methode zum Teilen der Hand (Split)
+    // Methode, um die Hand zu splitten.
     fun split(): Boolean {
         println("$name - SPLIT\n" +
                 "Die Hand wurde gesplittet!")
-        splitHand.hand.add(hand.hand.removeAt(0)) // Entfernt eine Karte von der ursprünglichen Hand und fügt sie zur gesplitteten Hand hinzu
-        balance - bet // Reduziert den Einsatz für die gesplittete Hand vom Guthaben des Spielers
-        playerHandValue = hand.handValue(true)
-        playerSplitHandValue = splitHand.handValue(true)
-        return true // Gibt 'true' zurück, um anzuzeigen, dass der Spieler die Hand gesplittet hat
+        splitHand.hand.add(hand.hand.removeAt(0)) // Eine Karte wird zur gesplitteten Hand hinzugefügt
+        balance - bet // Hier fehlt ein Gleichheitszeichen, um den Betrag tatsächlich zu subtrahieren
+        playerHandValue = hand.handValue(true) // Aktualisieren des Wertes der Hand für den Benutzerspieler
+        playerSplitHandValue = splitHand.handValue(true) // Aktualisieren des Wertes der gesplitteten Hand
+        return true
     }
 
-    // Methode zum Anzeigen der gesplitteten Hand
+    // Methode, um die gesplittete Hand anzuzeigen.
     fun splitHandShow() {
         println("Die aktuelle Hand von $name:")
         println(splitHand)
         println("Der aktuelle Wert der Hand ist: ${splitHand.handValue(true)}")
     }
 
-    // Methode, um eine Karte für die gesplittete Hand zu ziehen (Split Hit)
+    // Methode, um eine Karte für die gesplittete Hand zu ziehen (Hit).
     fun splitHit() {
         println("$name - HIT\n" +
                 "Eine neue Karte wird verteilt!")
-        splitHand.cardAdd() // Zieht eine Karte zur gesplitteten Hand
-        splitHandShow() // Zeigt die aktualisierte gesplittete Hand des Spielers an
-        // Setzt den Wert der gesplitteten Hand auf den aktuellen Wert
-        playerSplitHandValue = splitHand.handValue(true)
+        splitHand.cardAdd()
+        splitHandShow()
+        playerSplitHandValue = splitHand.handValue(true) // Aktualisieren des Wertes der gesplitteten Hand
     }
 
-    // Methode, um keine weitere Karte für die gesplittete Hand zu ziehen (Split Stand)
+    // Methode, um keine weiteren Karten für die gesplittete Hand zu ziehen (Stand).
     fun splitStand(): Boolean {
         println("$name - STAND")
         println("Aktueller Wert: ${splitHand.handValue(true)}")
-        playerSplitHandValue = splitHand.handValue(true)
-        return true // Gibt 'true' zurück, um anzuzeigen, dass der Spieler für die gesplittete Hand steht
+        playerSplitHandValue = splitHand.handValue(true) // Aktualisieren des Wertes der gesplitteten Hand
+        return true
     }
 
-    // Methode, um aufzugeben (Surrender)
+    // Methode für die Aufgabe (Surrender).
     fun surrender(): Boolean {
         println("$name - SURRENDER\n" +
                 "Der halbe Einsatz wurde erstattet.")
-        balance += bet / 2 // Erhöht das Guthaben des Spielers um die Hälfte des aktuellen Einsatzes
-        balance = round(balance * 100) / 100
-        return true // Gibt 'true' zurück, um anzuzeigen, dass der Spieler aufgegeben hat
+        balance += bet / 2 // Der halbe Einsatz wird zur Balance hinzugefügt
+        balance = round(balance * 100) / 100 // Runden auf 2 Dezimalstellen
+        return true
     }
 
-    // Methode, um eine Versicherung abzuschließen (Insurance)
+    // Methode für die Versicherung (Insurance).
     fun insurance(): Boolean {
         println("$name - INSURANCE\n" +
                 "Die Wette auf den Dealer für $bet wurde gesetzt!")
-        balance -= bet // Reduziert das Guthaben des Spielers um den aktuellen Einsatz für die Versicherung
-        return true // Gibt 'true' zurück, um anzuzeigen, dass der Spieler eine Versicherung abgeschlossen hat
+        balance -= bet // Der Betrag der Versicherung wird von der Balance abgezogen
+        return true
     }
 
-    // Methode, um den Einsatz zu verdoppeln (Double Down)
+    // Methode für das Verdoppeln (Double Down).
     fun doubleDown(): Boolean {
         println("$name - DOUBLE DOWN\n" +
                 "Der Einsatz wurde verdoppelt und eine weitere Karte wird verteilt!")
-        balance -= bet // Reduziert das Guthaben des Spielers um den aktuellen Einsatz
-        bet *= 2 // Verdoppelt den aktuellen Einsatz
-        hand.cardAdd() // Zieht eine Karte zur Hand des Spielers
-        handShow() // Zeigt die aktualisierte Hand des Spielers an
-        // Setzt den Wert der Spielerhand auf den aktuellen Wert
-        playerHandValue = hand.handValue(true)
-        return true // Gibt 'true' zurück, um anzuzeigen, dass der Spieler den Einsatz verdoppelt hat
+        balance -= bet // Der ursprüngliche Einsatz wird von der Balance abgezogen
+        bet *= 2 // Der Einsatz wird verdoppelt
+        hand.cardAdd() // Eine weitere Karte wird gezogen
+        handShow()
+        playerHandValue = hand.handValue(true) // Aktualisieren des Wertes der Hand für den Benutzerspieler
+        return true
     }
 }

@@ -1,35 +1,35 @@
 package Blackjack
 
-// Klasse, die ein Kartendeck für das Blackjack-Spiel repräsentiert
+// Klasse, die das Kartendeck im Blackjack-Spiel repräsentiert.
 class Deck(var deck: MutableList<Card> = mutableListOf()) {
-    // Der Konstruktor der Klasse wird beim Erstellen eines Deck-Objekts aufgerufen
+
+    // Konstruktor, der das Deck initialisiert und mischt.
     init {
-        repeat(6) { // Erstellt 6 Kartenspiele (typischerweise besteht ein Blackjack-Deck aus 6 Kartenspielen)
-            for (suit in Suit.values()) { // Durchlaufe alle Kartenfarben (Suit) im Enum Suit
-                for (rank in Rank.values()) { // Durchlaufe alle Kartenwerte (Rank) im Enum Rank
-                    deck.add(Card(suit, rank)) // Füge eine Karte mit der aktuellen Farbe und dem aktuellen Wert zum Deck hinzu
+        repeat(6) { // Hier wird das Deck mit 6 Kartensätzen erstellt (typisch für Blackjack)
+            for (suit in Suit.values()) {
+                for (rank in Rank.values()) {
+                    deck.add(Card(suit, rank)) // Jede Karte wird dem Deck hinzugefügt
                 }
             }
         }
-        deck.shuffle() // Mische das Deck, um die Karten zufällig anzuordnen
+        deck.shuffle() // Das Deck wird gemischt, um die Karten zufällig anzuordnen
     }
 
-    // Methode zum Ziehen einer Karte aus dem Deck
+    // Methode, um eine Karte aus dem Deck zu ziehen.
     fun cardDraw(): Card {
-        return deck.removeAt(0) // Entferne die erste Karte aus dem Deck und gib sie zurück (Deck wird wie ein Stapel behandelt)
+        return deck.removeAt(0) // Die erste Karte aus dem Deck wird entfernt und zurückgegeben
     }
 
-    // Methode zum Wechseln des Decks (wird normalerweise verwendet, wenn das Deck fast leer ist)
+    // Methode, um das Deck neu zu mischen.
     fun deckChange() {
-        println("Die Decks werden gewechselt!") // Ausgabe einer Meldung, dass die Decks gewechselt werden
-        deck.clear() // Entferne alle Karten aus dem Deck
-        repeat(6) { // Erstelle erneut 6 Kartenspiele und füge sie zum Deck hinzu
-            for (suit in Suit.values()) { // Durchlaufe alle Kartenfarben (Suit) im Enum Suit
-                for (rank in Rank.values()) { // Durchlaufe alle Kartenwerte (Rank) im Enum Rank
-                    deck.add(Card(suit, rank)) // Füge eine Karte mit der aktuellen Farbe und dem aktuellen Wert zum Deck hinzu
+        deck.clear() // Alle Karten im Deck werden entfernt
+        repeat(6) { // Das Deck wird erneut mit 6 Kartensätzen aufgefüllt und gemischt
+            for (suit in Suit.values()) {
+                for (rank in Rank.values()) {
+                    deck.add(Card(suit, rank)) // Jede Karte wird dem Deck hinzugefügt
                 }
             }
         }
-        deck.shuffle() // Mische das Deck erneut, um die Karten zufällig anzuordnen
+        deck.shuffle() // Das Deck wird erneut gemischt
     }
 }

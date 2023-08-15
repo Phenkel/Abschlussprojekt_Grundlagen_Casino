@@ -4,41 +4,36 @@ import Globals.BLUE
 import Globals.RED
 import Globals.RESET
 
-// Klasse, die eine Hand im Blackjack-Spiel repräsentiert
+// Klasse, die eine Hand im Blackjack-Spiel repräsentiert.
 class Hand() {
-    // Eine Liste von Karten, die die Hand enthält
-    val hand: MutableList<Card> = mutableListOf()
+    val hand: MutableList<Card> = mutableListOf() // Liste, um die Karten in der Hand zu speichern
 
-    // Methode zum Hinzufügen einer Karte zur Hand
-    fun cardAdd(){
-        hand.add(deck.cardDraw()) // 'deck' scheint eine Referenz auf das Kartendeck zu sein, und 'cardDraw()' zieht eine Karte aus dem Deck und fügt sie zur Hand hinzu
+    // Methode, um eine Karte zur Hand hinzuzufügen.
+    fun cardAdd() {
+        hand.add(deck.cardDraw())
     }
 
-    // Methode zum Berechnen des Wertes der Hand
+    // Methode, um den Wert der Hand zu berechnen.
     fun handValue(acesToOne: Boolean): Int {
-        var handValue: Int = 0  // Variable, um den aktuellen Wert der Hand zu speichern
+        var handValue: Int = 0
         if (acesToOne) {
-            var aces: Int = 0       // Variable, um die Anzahl der Asse in der Hand zu zählen (Ass kann 1 oder 11 wert sein)
+            var aces: Int = 0
 
-            // Durchlaufe jede Karte in der Hand
             for (card in hand) {
                 when (card.rank) {
-                    Rank.ACE -> {  // Wenn die Karte ein Ass ist
-                        handValue += card.rank.cardValue  // Füge den Wert des Asses zum aktuellen Handwert hinzu (normalerweise 11)
-                        aces++  // Erhöhe die Anzahl der Asse in der Hand
+                    Rank.ACE -> {
+                        handValue += card.rank.cardValue
+                        aces++
                     }
-                    else -> handValue += card.rank.cardValue  // Für andere Karten, füge ihren Wert zum aktuellen Handwert hinzu
+                    else -> handValue += card.rank.cardValue
                 }
             }
 
-            // Wenn der Handwert größer als 21 ist und Asse in der Hand vorhanden sind
-            // Dann zähle ein Ass als 1 statt 11, um den Handwert zu reduzieren (um ein Bust zu verhindern)
             while (handValue > 21 && aces > 0) {
-                aces--  // Reduziere die Anzahl der verbleibenden Asse
-                handValue -= 10  // Ziehe 10 vom Handwert ab (da ein Ass von 11 auf 1 reduziert wird)
+                aces--
+                handValue -= 10
             }
 
-            // Gib den berechneten Handwert zurück
         } else {
             for (card in hand) {
                 handValue += card.rank.cardValue
@@ -47,6 +42,7 @@ class Hand() {
         return handValue
     }
 
+    // Überschreiben der toString()-Methode, um die visuelle Darstellung der Hand auszugeben.
     override fun toString(): String {
         var line1 = ""
         var line2 = ""
@@ -59,7 +55,7 @@ class Hand() {
             var color = if (card.suit == Suit.DIAMOND || card.suit == Suit.HEART) RED else BLUE
             line1 += color + "┌─────────┐" + " "
             line2 += color + "│ ${card.rank.cardRank}       │" + " "
-            line3 += color + "│         │" +  " "
+            line3 += color + "│         │" + " "
             line4 += color + "│    ${card.suit.cardSuit}    │" + " "
             line5 += color + "│         │" + " "
             line6 += color + "│       ${card.rank.cardRank} │" + " "
@@ -71,7 +67,7 @@ class Hand() {
         line4 += "\n"
         line5 += "\n"
         line6 += "\n"
-        line7 += RESET
-        return line1 + line2 + line3 + line4 + line5 + line6 + line7
+        line7 += RESET // Zurücksetzen der Farbe auf die Standardfarbe
+        return line1 + line2 + line3 + line4 + line5 + line6 + line7 // Die visuelle Darstellung der Hand wird zusammengesetzt
     }
 }

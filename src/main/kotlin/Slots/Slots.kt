@@ -1,40 +1,45 @@
 package Slots
-import Globals.*
+import Globals.* // Import der globalen Farbkonstanten aus dem Globals-Paket
 
+// Die Klasse, die das Slot-Spiel repräsentiert.
 class Slots() {
 
-    var win: Double = 0.0
-    val symbols: List<Char> = listOf(SPADE_SYMBOL, DIAMOND_SYMBOL, HEART_SYMBOL, CLOVER_SYMBOL)
-    val lines = MutableList(3) { MutableList(3) { Symbol(symbols.random()) } }
-    var winCheck: Boolean = false
+    // Eigenschaften des Slot-Spiels.
+    val symbols: List<Char> = listOf(SPADE_SYMBOL, DIAMOND_SYMBOL, HEART_SYMBOL, CLOVER_SYMBOL) // Liste der Slot-Symbole.
+    val lines = MutableList(3) { MutableList(3) { Symbol(symbols.random()) } } // 3x3 Gitter für die Slot-Linien.
+    var winCheck: Boolean = false // Gibt an, ob eine Gewinnkombination erzielt wurde.
 
+    // Funktion, um die aktuellen Slot-Linien anzuzeigen.
     fun displayLines() {
         println("${BLUE}=====${RED}=====${GREEN}=====${RESET}")
         for (line in lines) {
-            println(line.joinToString(" - "))
+            println(line.joinToString(" - ")) // Jede Zeile wird als Zeichenkette mit Trennzeichen angezeigt.
         }
         println("${GREEN}=====${RED}=====${BLUE}=====${RESET}")
     }
 
+    // Funktion, um die Slot-Linien zurückzusetzen und neue Symbole zuzuweisen.
     fun resetLines() {
-        lines.forEach { it.clear() }
+        lines.forEach { it.clear() } // Alle Symbole in den Linien löschen.
         for (line in lines) {
             repeat(3) {
-                line.add(Symbol(symbols.random()))
+                line.add(Symbol(symbols.random())) // Neue zufällige Symbole den Linien zuweisen.
             }
         }
     }
 
+    // Funktion, um die Slot-Linien auf Gewinnkombinationen zu überprüfen.
     fun lineCheck() {
         for (line in lines) {
-            line.forEach { it.isLastSpin = true }
-            if (line[0] == line[1] && line[1] == line[2]) {
-                line.forEach { it.hit() }
-                bet *= 3
+            line.forEach { it.isLastSpin = true } // Alle Symbole in der Linie als im letzten Spin markieren.
+            if (line[0].symbol == line[1].symbol && line[1].symbol == line[2].symbol) {
+                line.forEach { it.hit() } // Alle Symbole in der Linie als getroffen markieren.
+                bet *= 3 // Den Einsatz erhöhen, da eine Gewinnkombination erzielt wurde.
             }
         }
     }
 
+    // Funktion, um diagonale Gewinnkombinationen zu überprüfen.
     fun crossCheck() {
         if (lines[0][0].symbol == lines[1][1].symbol && lines[1][1].symbol == lines[2][2].symbol) {
             lines[0][0].hit()

@@ -1,6 +1,8 @@
 package Blackjack
-import Globals.*
 
+import Globals.* // Importieren der globalen Konstanten und Funktionen aus der Globals-Datei
+
+// Globale Variablen zur Steuerung des Spielverlaufs
 var insuranceCheck: Boolean = false
 var splitCheck: Boolean = false
 var standCheck: Boolean = false
@@ -15,11 +17,13 @@ var playerBurnedCheck: Boolean = false
 var endGameCheck: Boolean = false
 var tipCounter: Int = 0
 
+// Erstellung des Dealer-Objekts und des Kartendecks
 var dealer: Dealer = Dealer("Dealer")
 var deck: Deck = Deck()
 
-// Funktion zum Anzeigen von Start- und Endmeldungen mit farbigen Symbolen
+// Funktion zur Ausgabe des Startbanners
 fun startMessage() {
+    // Banner für den Spielstart
     println("${BLUE}┌─────────┐ ${RED}┌─────────┐ ${RESET}######                                                   #    # ${RED}┌─────────┐ ${BLUE}┌─────────┐\n" +
             "${BLUE}│ ${Rank.ACE.cardRank}       │ ${RED}│ ${Rank.JACK.cardRank}       │ ${RESET}#     # #        ##    ####  #    #      #   ##    ####  #   #  ${RED}│ ${Rank.JACK.cardRank}       │ ${BLUE}│ ${Rank.ACE.cardRank}       │\n" +
             "${BLUE}│         │ ${RED}│         │ ${RESET}#     # #       #  #  #    # #   #       #  #  #  #    # #  #   ${RED}│         │ ${BLUE}│         │\n" +
@@ -29,19 +33,18 @@ fun startMessage() {
             "${BLUE}└─────────┘ ${RED}└─────────┘ ${RESET}######  ###### #    #  ####  #    #  ####  #    #  ####  #    # ${RED}└─────────┘ ${BLUE}└─────────┘\n${RESET}")
 }
 
-// Funktion, um eine neue Spielrunde zu starten
+// Funktion zur Initialisierung des Spielstarts
 fun gameStart(player: UserPlayer) {
     println("Startrunde:")
-    player.start() // Startet die Spielerrunde für den Benutzer
+    player.start() // Startet die Startrunde für den Spieler
     repeat(30) {
         print(".")
         Thread.sleep(100)
     }
     println()
-    dealer.start() // Startet die Dealer-Runde
+    dealer.start() // Startet die Startrunde für den Dealer
     if (tipCounter == 3) {
         println("Um sich für das ganze Trinkgeld zu bedanken, flüstert dir die Bedienung die andere Karte vom Dealer ins Ohr")
-        // Zeigt die verdeckte Karte des Dealers
         if (dealer.hand.hand.first().rank.cardValue >= dealer.hand.hand.last().rank.cardValue) dealer.hand.hand.last().printCard()
         else dealer.hand.hand.first().printCard()
         tipCounter = 0
@@ -53,24 +56,23 @@ fun gameStart(player: UserPlayer) {
     println()
 }
 
-// Funktion für die Spielerrunde
+// Funktion zur Durchführung des Spielzugs für den Spieler
 fun playerTurn(player: UserPlayer) {
     println("Spielerrunde:")
-    player.handShow() // Zeigt die Hand des Spielers an
+    player.handShow() // Zeigt die Hand des Spielers
+    // Menü zur Auswahl der Aktionen
     println("1 - HIT")
     println("2 - STAND")
     println("3 - SURRENDER")
     if (balance >= bet) println("4 - INSURANCE")
     if (balance >= bet) println("5 - DOUBLE DOWN")
-    // Prüft, ob eine Split-Option für den Spieler verfügbar ist
     if (player.hand.hand[0].rank == player.hand.hand[1].rank) println("6 - SPLIT")
     var userInputPlayerMenu: Int = 0
-    // Schleife zur Benutzereingabe für die Aktionen des Spielers
     do {
         print("Treffen sie ihre Auswahl: ")
         try {
             userInputPlayerMenu = readln().toInt()
-            // Überprüft die Gültigkeit der Benutzereingabe basierend auf den verfügbaren Optionen
+            // Überprüfung der Auswahl basierend auf den Spielregeln und dem Spielerstatus
             if ((player.hand.hand[0].rank != player.hand.hand[1].rank && userInputPlayerMenu == 6) || (balance < bet && (userInputPlayerMenu == 5 || userInputPlayerMenu == 4))) {
                 errorMessage("Ungültige Eingabe!")
                 userInputPlayerMenu = 0
@@ -88,7 +90,7 @@ fun playerTurn(player: UserPlayer) {
         Thread.sleep(100)
     }
     println()
-    // Abhängig von der Benutzereingabe werden die entsprechenden Aktionen für den Spieler ausgeführt
+    // Abhängig von der Auswahl des Spielers werden die entsprechenden Aktionen durchgeführt
     when (userInputPlayerMenu) {
         1 -> player.hit()
         2 -> standCheck = player.stand()
@@ -97,19 +99,18 @@ fun playerTurn(player: UserPlayer) {
         5 -> doubleDownCheck = player.doubleDown()
         6 -> splitCheck = player.split()
     }
-    // Überprüft, ob die Spielerrunde beendet ist oder weitere Aktionen erforderlich sind
     if (standCheck || doubleDownCheck) println("Spielerrunde beendet.")
     else if (surrenderCheck) println("Runde beendet.")
-    // Wenn der Spieler seine Hand gesplittet hat
+    // Behandlung des Splits
     else if (splitCheck) {
+        // Durchführung der Aktionen für die erste Hand
         do {
-            player.handShow() // Zeigt die Hand des Spielers an
+            player.handShow()
             println("1 - HIT")
             println("2 - STAND")
             print("Treffen sie ihre Auswahl: ")
             try {
                 userInputPlayerMenu = readln().toInt()
-                // Überprüft die Gültigkeit der Benutzereingabe für die gesplittete Hand
                 if (userInputPlayerMenu != 1 && userInputPlayerMenu != 2) {
                     errorMessage("Ungültige Eingabe!")
                     userInputPlayerMenu = 0
@@ -123,25 +124,22 @@ fun playerTurn(player: UserPlayer) {
                 Thread.sleep(100)
             }
             println()
-            // Entsprechend der Benutzereingabe werden die Aktionen für die gesplittete Hand ausgeführt
+            // Durchführung der Aktion basierend auf der Spielerwahl
             when (userInputPlayerMenu) {
                 1 -> player.hit()
                 2 -> standCheck = player.stand()
             }
-            // Überprüft, ob die Spielerhand beendet ist oder weitere Aktionen erforderlich sind
             if (standCheck) println("Jetzt kommt die Splithand.")
-            // Überprüft, ob die Spielerhand "burned" ist (über 21)
             if (playerHandValue > 21) errorMessage("BURNED!")
         } while (!standCheck && playerHandValue <= 21)
-        // Wenn die Spielerhand beendet ist, beginnt die Runde für die gesplittete Hand
+        // Durchführung der Aktionen für die zweite Hand
         do {
-            player.splitHandShow() // Zeigt die Hand der gesplitteten Hand an
+            player.splitHandShow()
             println("1 - HIT")
             println("2 - STAND")
             print("Treffen sie ihre Auswahl: ")
             try {
                 userInputPlayerMenu = readln().toInt()
-                // Überprüft die Gültigkeit der Benutzereingabe für die gesplittete Hand
                 if (userInputPlayerMenu != 1 && userInputPlayerMenu != 2) {
                     errorMessage("Ungültige Eingabe!")
                     userInputPlayerMenu = 0
@@ -155,26 +153,22 @@ fun playerTurn(player: UserPlayer) {
                 Thread.sleep(100)
             }
             println()
-            // Entsprechend der Benutzereingabe werden die Aktionen für die gesplittete Hand ausgeführt
+            // Durchführung der Aktion basierend auf der Spielerwahl
             when (userInputPlayerMenu) {
                 1 -> player.splitHit()
                 2 -> splitStandCheck = player.splitStand()
             }
-            // Überprüft, ob die gesplittete Hand beendet ist oder weitere Aktionen erforderlich sind
             if (splitStandCheck) println("Spielerrunde beendet.")
-            // Überprüft, ob die gesplittete Hand "burned" ist (über 21)
             if (playerSplitHandValue > 21 && playerHandValue <= 21) errorMessage("BURNED!")
         } while (!splitStandCheck && playerSplitHandValue <= 21)
-    }
-    // Wenn keine gesplittete Hand vorhanden ist
-    else {
+    } else {
+        // Durchführung der Aktionen für den normalen Spielzug
         while (!standCheck && playerHandValue <= 21) {
             println("1 - HIT")
             println("2 - STAND")
             print("Treffen sie ihre Auswahl: ")
             try {
                 userInputPlayerMenu = readln().toInt()
-                // Überprüft die Gültigkeit der Benutzereingabe für die Hand des Spielers
                 if (userInputPlayerMenu != 1 && userInputPlayerMenu != 2) {
                     errorMessage("Ungültige Eingabe!")
                     userInputPlayerMenu = 0
@@ -188,16 +182,15 @@ fun playerTurn(player: UserPlayer) {
                 Thread.sleep(100)
             }
             println()
-            // Entsprechend der Benutzereingabe werden die Aktionen für die Hand des Spielers ausgeführt
+            // Durchführung der Aktion basierend auf der Spielerwahl
             when (userInputPlayerMenu) {
                 1 -> player.hit()
                 2 -> standCheck = player.stand()
             }
-            // Überprüft, ob die Spielerhand beendet ist oder weitere Aktionen erforderlich sind
             if (standCheck) println("Spielerrunde beendet.")
         }
     }
-    // Überprüft, ob die Spielerhand oder die gesplittete Hand "burned" ist (über 21)
+    // Behandlung von Burned-Händen
     if ((!splitCheck && playerHandValue > 21) || (splitCheck && (playerHandValue > 21 && playerSplitHandValue > 21))) {
         errorMessage("BURNED!")
         playerBurnedCheck = true
@@ -209,20 +202,19 @@ fun playerTurn(player: UserPlayer) {
     println()
 }
 
-// Funktion für das Ende des Spiels und die Auswertung des Ergebnisses
+// Funktion zur Durchführung des Spielendes
 fun gameEnd(player: UserPlayer) {
     println()
-    // Überprüft, ob eine Versicherung abgeschlossen wurde
+    // Überprüfung auf Versicherung
     if (insuranceCheck) {
-        // Überprüft, ob der Spieler die Versicherung gewinnt oder verliert
         if (playerHandValue <= 21 && playerHandValue != dealerHandValue) {
             successMessage("Einsatz ${bet * 2}€ geht zurück an den Spieler!")
             balance += bet * 2
         } else errorMessage("Runde verloren! Viel Glück beim nächsten Mal.")
     }
-    // Überprüft, ob eine Hand gesplittet wurde
+    // Überprüfung auf Split
     else if (splitCheck) {
-        // Auswertung der Ergebnisse für die beiden gesplitteten Hände
+        // Auswertung der ersten Hand
         if ((playerHandValue > dealerHandValue && playerHandValue <= 21) || (playerHandValue <= 21 && dealerHandValue > 21)) {
             successMessage("Erste Hand: Gewinn ${bet * 2}€")
             balance += bet * 2
@@ -230,6 +222,7 @@ fun gameEnd(player: UserPlayer) {
             successMessage("Unentschieden! ${bet}€ geht zurück an den Spieler")
             balance += bet
         } else errorMessage("1. Hand verloren!")
+        // Auswertung der zweiten Hand
         if ((playerSplitHandValue > dealerHandValue && playerSplitHandValue <= 21) || (playerSplitHandValue <= 21 && dealerHandValue > 21)) {
             successMessage("Zweite Hand: Gewinn ${bet * 2}€")
             balance += bet * 2
@@ -237,7 +230,7 @@ fun gameEnd(player: UserPlayer) {
             successMessage("Unentschieden! ${bet}€ geht zurück an den Spieler")
             balance += bet
         } else errorMessage("2. Hand verloren!")
-        // Auswertung der Gesamtergebnisse für beide gesplitteten Hände
+        // Auswertung der Gesamtsituation
         if (((playerHandValue > dealerHandValue && playerHandValue <= 21) || (playerHandValue <= 21 && dealerHandValue > 21)) && ((playerSplitHandValue > dealerHandValue && playerSplitHandValue <= 21) || (playerSplitHandValue <= 21 && dealerHandValue > 21))) {
             successMessage("Gewinn beider Hände: ${bet * 4}€")
         } else if (((playerHandValue > dealerHandValue && playerHandValue <= 21)) || (playerSplitHandValue > dealerHandValue && playerSplitHandValue <= 21)) {
@@ -245,10 +238,8 @@ fun gameEnd(player: UserPlayer) {
         } else if ((playerHandValue == dealerHandValue && playerHandValue <= 21) && (playerSplitHandValue == dealerHandValue && playerSplitHandValue <= 21)) {
             successMessage("Beide Hände unentschieden! Viel Glück beim nächsten Mal")
         } else errorMessage("Runde verloren! Viel Glück beim nächsten Mal.")
-    }
-    // Wenn keine Hand gesplittet wurde
-    else {
-        // Auswertung des Ergebnisses für die Hand des Spielers
+    } else {
+        // Auswertung des normalen Spielzugs
         if ((playerHandValue <= 21 && playerHandValue > dealerHandValue) || (playerHandValue <= 21 && dealerHandValue > 21)) {
             successMessage("Gewinn ${bet * 2}€")
             balance += bet * 2
@@ -259,16 +250,16 @@ fun gameEnd(player: UserPlayer) {
     }
 }
 
-// Funktion zum Zurücksetzen aller globalen Variablen für eine neue Spielrunde
+// Funktion zum Zurücksetzen der globalen Variablen nach einer Runde
 fun resetGlobals(player: UserPlayer) {
-    player.hand.hand.clear() // Leert die Hand des Spielers
-    player.splitHand.hand.clear() // Leert die gesplittete Hand des Spielers
-    dealer.hand.hand.clear() // Leert die Hand des Dealers
-    insuranceCheck = false // Setzt die Versicherung-Flag auf false zurück
-    splitCheck = false // Setzt die Split-Flag auf false zurück
-    standCheck = false // Setzt die Stand-Flag auf false zurück
-    splitStandCheck = false // Setzt die Split-Stand-Flag auf false zurück
-    surrenderCheck = false // Setzt die Surrender-Flag auf false zurück
-    doubleDownCheck = false // Setzt die Double-Down-Flag auf false zurück
-    playerBurnedCheck = false // Setzt die Burned-Flag auf false zurück
+    player.hand.hand.clear()
+    player.splitHand.hand.clear()
+    dealer.hand.hand.clear()
+    insuranceCheck = false
+    splitCheck = false
+    standCheck = false
+    splitStandCheck = false
+    surrenderCheck = false
+    doubleDownCheck = false
+    playerBurnedCheck = false
 }
