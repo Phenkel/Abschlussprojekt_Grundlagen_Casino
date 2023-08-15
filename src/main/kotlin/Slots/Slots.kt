@@ -12,11 +12,11 @@ class Slots() {
     // Funktion, um die aktuellen Slot-Linien anzuzeigen.
     fun displayLines() {
         var counter: Int = 1
-        println("┌─────────────────┐" + "    |")
+        println("┌─────────────────┐" + "    │")
         for (line in lines) {
-            if (counter == 2) println("| " + line.joinToString(" | ") + " |" + "────┘") // Jede Zeile wird als Zeichenkette mit Trennzeichen angezeigt.
-            else if (counter == 1) println("| " + line.joinToString(" | ") + " |" + "    |") // Jede Zeile wird als Zeichenkette mit Trennzeichen angezeigt.
-            else println("| " + line.joinToString(" | ") + " |") // Jede Zeile wird als Zeichenkette mit Trennzeichen angezeigt.
+            if (counter == 2) println("│ " + line.joinToString(" │ ") + " │" + "────┘") // Jede Zeile wird als Zeichenkette mit Trennzeichen angezeigt.
+            else if (counter == 1) println("│ " + line.joinToString(" │ ") + " │" + "    │") // Jede Zeile wird als Zeichenkette mit Trennzeichen angezeigt.
+            else println("│ " + line.joinToString(" │ ") + " │") // Jede Zeile wird als Zeichenkette mit Trennzeichen angezeigt.
             counter ++
         }
         println("${RESET}└─────────────────┘")

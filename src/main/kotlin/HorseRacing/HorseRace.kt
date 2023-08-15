@@ -5,6 +5,14 @@ import kotlin.random.Random
 // Die Klasse, die die Pferderennen-Logik enthält.
 class HorseRace {
     val horse: String = "\uD83D\uDC34" // Ein Unicode-Symbol für ein Pferd (Pferdeemoji)
+    val horseSpeedList: MutableList<Long> = mutableListOf()
+
+    fun fastestHorseColor(horseTime: Long,): String {
+        horseSpeedList.add(horseTime)
+        horseSpeedList.sort()
+        return if (horseTime == horseSpeedList[0]) GREEN
+        else RED
+    }
 
     // Die Funktion, die das Pferderennen simuliert und den Gewinner ermittelt.
     fun race(): Int {
@@ -17,7 +25,8 @@ class HorseRace {
             print(horse) // Das Pferdeemoji wird ausgegeben
             horseOneTime += horseRun // Die Gesamtzeit des Pferdes wird aktualisiert
         }
-        println("\nZeit von Pferd 1: ${GREEN}${horseOneTime}ms${RESET}!")
+        println(" FINISH!")
+        println("Zeit von Pferd 1: ${fastestHorseColor(horseOneTime)}${horseOneTime}ms${RESET}!")
 
         // Start des Rennens für Pferd 2
         print("Pferd 2: ")
@@ -28,7 +37,8 @@ class HorseRace {
             print(horse) // Das Pferdeemoji wird ausgegeben
             horseTwoTime += horseRun // Die Gesamtzeit des Pferdes wird aktualisiert
         }
-        println("\nZeit von Pferd 2: ${GREEN}${horseTwoTime}ms${RESET}!")
+        println(" FINISH!")
+        println("Zeit von Pferd 2: ${fastestHorseColor(horseTwoTime)}${horseTwoTime}ms${RESET}!")
 
         // Start des Rennens für Pferd 3
         print("Pferd 3: ")
@@ -39,7 +49,8 @@ class HorseRace {
             print(horse) // Das Pferdeemoji wird ausgegeben
             horseThreeTime += horseRun // Die Gesamtzeit des Pferdes wird aktualisiert
         }
-        println("\nZeit von Pferd 3: ${GREEN}${horseThreeTime}ms${RESET}!")
+        println(" FINISH!")
+        println("Zeit von Pferd 3: ${fastestHorseColor(horseThreeTime)}${horseThreeTime}ms${RESET}!")
 
         // Start des Rennens für Pferd 4
         print("Pferd 4: ")
@@ -50,7 +61,9 @@ class HorseRace {
             print(horse) // Das Pferdeemoji wird ausgegeben
             horseFourTime += horseRun // Die Gesamtzeit des Pferdes wird aktualisiert
         }
-        println("\nZeit von Pferd 4: ${GREEN}${horseFourTime}ms${RESET}!")
+        println(" FINISH!")
+        println("Zeit von Pferd 4: ${fastestHorseColor(horseFourTime)}${horseFourTime}ms${RESET}!")
+        horseSpeedList.clear()
 
         // Gewinner wird ermittelt
         return if (horseOneTime < horseTwoTime && horseOneTime < horseThreeTime && horseOneTime < horseFourTime) {

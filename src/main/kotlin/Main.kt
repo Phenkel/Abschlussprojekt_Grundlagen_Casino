@@ -30,7 +30,7 @@ fun loadingScreen(color1: String, color2: String, color3: String) {
 
 // Animation des Ladescreens
 fun loadingScreenAnimation() {
-    repeat(3) {
+    repeat(2) {
         loadingScreen(RED, GREEN, BLUE)
         Thread.sleep(1000)
         loadingScreen(BLUE, RED, GREEN)
