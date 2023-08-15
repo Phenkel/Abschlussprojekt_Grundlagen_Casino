@@ -37,6 +37,7 @@ class HorseRace {
             print(horse) // Das Pferdeemoji wird ausgegeben
             horseTwoTime += horseRun // Die Gesamtzeit des Pferdes wird aktualisiert
         }
+        if (horseTwoTime == horseOneTime) horseTwoTime++
         println(" FINISH!")
         println("Zeit von Pferd 2: ${fastestHorseColor(horseTwoTime)}${horseTwoTime}ms${RESET}!")
 
@@ -49,6 +50,7 @@ class HorseRace {
             print(horse) // Das Pferdeemoji wird ausgegeben
             horseThreeTime += horseRun // Die Gesamtzeit des Pferdes wird aktualisiert
         }
+        if (horseThreeTime == horseOneTime || horseThreeTime == horseTwoTime) horseThreeTime++
         println(" FINISH!")
         println("Zeit von Pferd 3: ${fastestHorseColor(horseThreeTime)}${horseThreeTime}ms${RESET}!")
 
@@ -61,6 +63,7 @@ class HorseRace {
             print(horse) // Das Pferdeemoji wird ausgegeben
             horseFourTime += horseRun // Die Gesamtzeit des Pferdes wird aktualisiert
         }
+        if (horseFourTime == horseOneTime || horseFourTime == horseTwoTime || horseFourTime == horseThreeTime) horseFourTime++
         println(" FINISH!")
         println("Zeit von Pferd 4: ${fastestHorseColor(horseFourTime)}${horseFourTime}ms${RESET}!")
         horseSpeedList.clear()
