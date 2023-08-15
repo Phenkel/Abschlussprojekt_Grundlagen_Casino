@@ -1,5 +1,5 @@
 package Blackjack
-import Globals.* // Import der globalen Farbkonstanten aus dem Globals-Paket
+import Globals.*
 
 // Aufzählung für die verschiedenen Kartenfarben (Suit) im Blackjack-Spiel.
 enum class Suit(val cardSuit: Char) {

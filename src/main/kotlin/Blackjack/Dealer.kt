@@ -1,6 +1,6 @@
 package Blackjack
 
-import Globals.* // Importieren der globalen Konstanten und Funktionen aus der Globals-Datei
+import Globals.*
 
 // Klasse, die den Dealer im Blackjack-Spiel repräsentiert und von BasicPlayer erbt.
 class Dealer(name: String, hand: Hand = Hand()) : BasicPlayer(name, hand) {

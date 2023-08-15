@@ -1,6 +1,6 @@
 package Blackjack
 
-import Globals.* // Importieren der globalen Konstanten und Funktionen aus der Globals-Datei
+import Globals.*
 import kotlin.math.round
 
 // Klasse, die den Benutzerspieler im Blackjack-Spiel repräsentiert und von BasicPlayer erbt.
@@ -38,7 +38,7 @@ class UserPlayer(name: String, hand: Hand = Hand()) : BasicPlayer(name, hand) {
         println("$name - SPLIT\n" +
                 "Die Hand wurde gesplittet!")
         splitHand.hand.add(hand.hand.removeAt(0)) // Eine Karte wird zur gesplitteten Hand hinzugefügt
-        balance - bet // Hier fehlt ein Gleichheitszeichen, um den Betrag tatsächlich zu subtrahieren
+        balance -= bet // Der Betrag der Wette wird für die gesplitte Hand von dem Guthaben abgezogen
         playerHandValue = hand.handValue(true) // Aktualisieren des Wertes der Hand für den Benutzerspieler
         playerSplitHandValue = splitHand.handValue(true) // Aktualisieren des Wertes der gesplitteten Hand
         return true

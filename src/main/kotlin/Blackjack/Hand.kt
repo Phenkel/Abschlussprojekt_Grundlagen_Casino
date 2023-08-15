@@ -1,8 +1,6 @@
 package Blackjack
 
-import Globals.BLUE
-import Globals.RED
-import Globals.RESET
+import Globals.*
 
 // Klasse, die eine Hand im Blackjack-Spiel repräsentiert.
 class Hand() {

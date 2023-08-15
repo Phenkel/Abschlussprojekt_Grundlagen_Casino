@@ -1,6 +1,6 @@
 package Blackjack
 
-import Globals.* // Importieren der globalen Konstanten und Funktionen aus der Globals-Datei
+import Globals.*
 
 // Globale Variablen zur Steuerung des Spielverlaufs
 var insuranceCheck: Boolean = false

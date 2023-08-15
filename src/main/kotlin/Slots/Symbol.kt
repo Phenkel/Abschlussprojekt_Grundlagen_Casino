@@ -1,5 +1,5 @@
 package Slots
-import Globals.* // Import der globalen Farbkonstanten aus dem Globals-Paket
+import Globals.*
 
 // Die Klasse, die ein Slot-Symbol repräsentiert.
 class Symbol(val symbol: Char) {
