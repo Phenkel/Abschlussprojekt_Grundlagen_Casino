@@ -1,5 +1,5 @@
 package Slots
-import Globals.* // Import der globalen Farbkonstanten aus dem Globals-Paket
+import Globals.*
 
 // Die Klasse, die das Slot-Spiel repräsentiert.
 class Slots() {
@@ -11,11 +11,15 @@ class Slots() {
 
     // Funktion, um die aktuellen Slot-Linien anzuzeigen.
     fun displayLines() {
-        println("${BLUE}=====${RED}=====${GREEN}=====${RESET}")
+        var counter: Int = 1
+        println("┌─────────────────┐" + "    |")
         for (line in lines) {
-            println(line.joinToString(" - ")) // Jede Zeile wird als Zeichenkette mit Trennzeichen angezeigt.
+            if (counter == 2) println("| " + line.joinToString(" | ") + " |" + "────┘") // Jede Zeile wird als Zeichenkette mit Trennzeichen angezeigt.
+            else if (counter == 1) println("| " + line.joinToString(" | ") + " |" + "    |") // Jede Zeile wird als Zeichenkette mit Trennzeichen angezeigt.
+            else println("| " + line.joinToString(" | ") + " |") // Jede Zeile wird als Zeichenkette mit Trennzeichen angezeigt.
+            counter ++
         }
-        println("${GREEN}=====${RED}=====${BLUE}=====${RESET}")
+        println("${RESET}└─────────────────┘")
     }
 
     // Funktion, um die Slot-Linien zurückzusetzen und neue Symbole zuzuweisen.
@@ -35,6 +39,7 @@ class Slots() {
             if (line[0].symbol == line[1].symbol && line[1].symbol == line[2].symbol) {
                 line.forEach { it.hit() } // Alle Symbole in der Linie als getroffen markieren.
                 bet *= 3 // Den Einsatz erhöhen, da eine Gewinnkombination erzielt wurde.
+                winCheck = true
             }
         }
     }

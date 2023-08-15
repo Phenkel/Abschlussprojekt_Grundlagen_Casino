@@ -16,7 +16,7 @@ fun leaveMessage() {
             " ${RESET}######  #    # #    # #    # ######    ${GREEN}#        ####  #    #    ${BLUE}### #    # #    # ###### #    #    ${RED}######  ######  ####   ####   ####  #    # ")
 }
 
-// Eine animierte Ladescreen-Nachricht
+// Eine Ladescreen-Nachricht
 fun loadingScreen(color1: String, color2: String, color3: String) {
     println("\n\n\n")
     print(  "$color1 #####                                      $color2#    #                                 $color3 #####                                \n" +
@@ -46,11 +46,11 @@ fun buyNewChips() {
     var userInputMoney: Double
     do {
         print("Für wieviel € möchten sie Chips erwerben: ")
-        try {
-            userInputMoney = readln().toDouble()
+        userInputMoney = try {
+            readln().toDouble()
         } catch (e: Exception) {
             errorMessage("Ungültige Eingabe!")
-            userInputMoney = 0.0
+            0.0
         }
         userInputMoney = round(userInputMoney * 100) / 100
     } while (userInputMoney == 0.0)

@@ -70,7 +70,7 @@ fun slotsGame() {
 
         // Animation des Slot-Spins.
         repeat(4) {
-            repeat(15) {
+            repeat(19) {
                 Thread.sleep(150)
                 print(".")
             }
@@ -80,7 +80,7 @@ fun slotsGame() {
         }
 
         // Ergebnis des Slot-Spins überprüfen und anzeigen.
-        repeat(15) {
+        repeat(19) {
             Thread.sleep(150)
             print(".")
         }

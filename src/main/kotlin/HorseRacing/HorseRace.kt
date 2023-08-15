@@ -1,5 +1,5 @@
 package HorseRacing
-import Globals.* // Import der globalen Variablen und Funktionen aus dem Globals-Paket
+import Globals.*
 import kotlin.random.Random
 
 // Die Klasse, die die Pferderennen-Logik enthält.
