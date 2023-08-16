@@ -123,6 +123,7 @@ fun horseRacing() {
         } else {
             drink()
             pickPocket()
+            professionalLovemaking()
             println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         }
 

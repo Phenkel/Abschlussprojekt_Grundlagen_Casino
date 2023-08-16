@@ -1,6 +1,5 @@
 package Globals
 
-import java.util.Random
 import kotlin.math.round
 import kotlin.system.exitProcess
 
@@ -42,7 +41,7 @@ fun wrongUserInput() {
     print(RESET)
 }
 
-// Eine Funktion um beklaut zu werden (zufällig)
+// Eine Funktion um beklaut zu werden (zufällige Chance)
 fun pickPocket(){
     val pickPocketChance: Int = (1..(100 - alcoholCounter)).random()
     if (pickPocketChance <= 2) {
@@ -88,6 +87,53 @@ fun drink() {
             errorMessage("WOW! Zu blöd um ein Getränk zu bestellen!")
             wrongUserInput()
         }
+    }
+}
+
+// Funktion um professionellen Beischlaf mit (M/W/D) zu ermöglichen (zufällige Chance) -> Für die realistische Vegas Erfahrung
+fun professionalLovemaking() {
+    val intimateServicesSpecialistChance: Int = if (balance >= 10000.0) (1..50).random() else (1..100).random()
+    val intimateServicesSpecialist: String = listOf<String>("Beischlaffachkraft(M)", "Beischlaffachkraft(W)", "Beischlaffachkraft(D)").random()
+    if (intimateServicesSpecialistChance <= 2) {
+        println("Eine $intimateServicesSpecialist nähert sich und fragt dich ob du für 100€ schöne 15 Minuten haben möchtest.")
+        var userInputIntimateServicesSpecialist: String = ""
+        do {
+            print("Nimmst du das Angebot an? Ja oder Nein: ")
+            userInputIntimateServicesSpecialist = readln()
+            if (userInputIntimateServicesSpecialist != "Ja" && userInputIntimateServicesSpecialist != "Nein") {
+                errorMessage("Ungültige Eingabe!")
+                wrongUserInput()
+                userInputIntimateServicesSpecialist = ""
+            } else if (userInputIntimateServicesSpecialist == "Ja" && balance < 100.0) {
+                errorMessage("Dein Geld von $balance€ reicht nicht aus für $intimateServicesSpecialist!")
+            }
+        } while (userInputIntimateServicesSpecialist == "")
+        if (userInputIntimateServicesSpecialist == "Nein") successMessage("Richtige Entscheidung! Professioneller Beischlaf ist hier verboten!")
+        else if (balance >= 100.0) {
+            balance -= 100.0
+            println("Du gehst mit $intimateServicesSpecialist auf dein Zimmer!")
+            Thread.sleep(1000)
+            val policeChance: Int = (1..2).random()
+            if (policeChance == 1) {
+                var counter: Int = 1
+                while (counter < 15) {
+                    if (counter == 1) println("$counter Minute um!")
+                    else println("$counter Minuten um!")
+                    Thread.sleep(100)
+                    counter++
+                }
+                successMessage("Du hattest schöne 15 Minuten!")
+            } else {
+                errorMessage("$intimateServicesSpecialist ist ein Undercover-Cop!")
+                if (balance >= 5000) {
+                    successMessage("Du hast erfolgreich ein Bestechungsgeld von 5000€ gezahlt!")
+                    balance -= 5000.0
+                } else {
+                    errorMessage("Du hattest nicht genug Geld um den Cop zu bestechen und kommst ins Gefängnis!")
+                    exitProcess(0)
+                }
+            }
+        } else println("Heute gibt es keine $intimateServicesSpecialist für dich!")
     }
 }
 

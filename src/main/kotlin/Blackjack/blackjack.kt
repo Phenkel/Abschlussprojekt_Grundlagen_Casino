@@ -128,8 +128,6 @@ fun blackjack() {
         // Wenn das Guthaben noch positiv ist, wird die Spielsituation zurückgesetzt
         if (balance > 0) {
             resetGlobals(userPlayer)
-            Thread.sleep(1000)
-            println("\n\n\n\n\n\n\n\n\n\n\n\n\n")
         }
 
         // Wenn das Guthaben aufgebraucht ist, das Spiel beenden
@@ -139,6 +137,9 @@ fun blackjack() {
         } else {
             drink()
             pickPocket()
+            professionalLovemaking()
+            Thread.sleep(1000)
+            println("\n\n\n\n\n\n\n\n\n\n\n\n\n")
         }
     } while (balance > 0)
 }

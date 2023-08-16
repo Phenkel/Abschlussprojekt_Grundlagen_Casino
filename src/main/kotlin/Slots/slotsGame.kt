@@ -110,6 +110,7 @@ fun slotsGame() {
         } else {
             drink()
             pickPocket()
+            professionalLovemaking()
         }
 
         Thread.sleep(1000)
