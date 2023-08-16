@@ -1,7 +1,8 @@
 # Syntax Kotlin Casino
 
 Willkommen im Syntax Kotlin Casino! Dieses Projekt bietet eine textbasierte Sammlung von Casino-Spielen, die in der Programmiersprache Kotlin implementiert sind. Mit diesem Casino können Spieler verschiedene Spiele genießen, Casinochips erwerben und ihr Glück auf die Probe stellen.
-Dieses Projekt ist meine Abschlussprüfung für meine Prüfung des Grundlagenmoduls für den Kurs zum Mobile Developer beim Syntax Institut.
+
+Dieses Projekt ist meine Abschlussprüfung des Grundlagenmoduls für den Kurs zum Mobile Developer beim Syntax Institut.
 
 ## Inhaltsverzeichnis
 

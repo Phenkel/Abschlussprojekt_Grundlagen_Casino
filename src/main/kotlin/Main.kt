@@ -41,7 +41,7 @@ fun loadingScreenAnimation() {
     println("\n\n\n\n\n\n\n\n\n\n")
 }
 
-// Methode zum Erwerb neuer Casinochips
+// Funktion zum Erwerb neuer Casinochips
 fun buyNewChips() {
     var userInputMoney: Double
     do {
@@ -61,7 +61,7 @@ fun buyNewChips() {
     Thread.sleep(1000)
 }
 
-// Die Hauptmethode des Programms
+// Die Hauptfunktion des Programms
 fun main() {
     var newAtCasino: Boolean = false
     do {
