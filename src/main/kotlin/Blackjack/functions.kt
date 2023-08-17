@@ -216,7 +216,7 @@ fun gameEnd(player: UserPlayer) {
     println()
     // Überprüfung auf Versicherung
     if (insuranceCheck) {
-        if ((playerHandValue != dealerHandValue) && ((playerHandValue <= 21 && dealerHandValue > 21) || (playerHandValue > 21 && dealerHandValue <= 21) || (playerHandValue <= 21 && dealerHandValue <= 21))) {
+        if ((playerHandValue != dealerHandValue) && !(playerHandValue > 21 && dealerHandValue > 21)) {
             successMessage("Einsatz ${bet * 2}€ geht zurück an den Spieler!")
             balance += bet * 2
         } else {
