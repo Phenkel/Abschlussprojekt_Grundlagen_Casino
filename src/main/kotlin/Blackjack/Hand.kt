@@ -50,7 +50,7 @@ class Hand() {
         var line6 = ""
         var line7 = ""
         for (card in hand) {
-            var color = if (card.suit == Suit.DIAMOND || card.suit == Suit.HEART) RED else BLUE
+            val color = if (card.suit == Suit.DIAMOND || card.suit == Suit.HEART) RED else BLUE
             line1 += color + "┌─────────┐" + " "
             line2 += color + "│ ${card.rank.cardRank}       │" + " "
             line3 += color + "│         │" + " "

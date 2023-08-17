@@ -216,10 +216,13 @@ fun gameEnd(player: UserPlayer) {
     println()
     // Überprüfung auf Versicherung
     if (insuranceCheck) {
-        if (playerHandValue <= 21 && playerHandValue != dealerHandValue) {
+        if ((playerHandValue != dealerHandValue) && ((playerHandValue <= 21 && dealerHandValue > 21) || (playerHandValue > 21 && dealerHandValue <= 21) || (playerHandValue <= 21 && dealerHandValue <= 21))) {
             successMessage("Einsatz ${bet * 2}€ geht zurück an den Spieler!")
             balance += bet * 2
-        } else errorMessage("Runde verloren! Viel Glück beim nächsten Mal.")
+        } else {
+            errorMessage("Unentschieden! Halber Einsatz $bet€ geht zurück an den Spieler!")
+            balance += bet
+        }
     }
     // Überprüfung auf Split
     else if (splitCheck) {

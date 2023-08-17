@@ -74,7 +74,7 @@ fun blackjack() {
         playerTurn(userPlayer)
 
         // Wenn der Spieler nicht aufgegeben hat und nicht überkauft ist, folgt die Dealerrunde
-        if (!surrenderCheck && !playerBurnedCheck) {
+        if ((!surrenderCheck && !playerBurnedCheck) || insuranceCheck) {
             dealer.dealerTurn()
 
             // Spielende: Ergebnis auswerten
